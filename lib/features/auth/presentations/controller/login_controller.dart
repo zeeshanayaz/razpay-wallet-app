@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
@@ -6,7 +5,6 @@ import 'package:get/get.dart';
 
 import '../../../../core/dialog.dart';
 import '../../../../core/utils/validator.dart';
-import '../../../../network/app_exceptions.dart';
 import '../../../../network/base_client.dart';
 import '../../../../network/base_controller.dart';
 
