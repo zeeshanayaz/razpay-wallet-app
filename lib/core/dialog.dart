@@ -11,37 +11,42 @@ class DialogHelper {
   //show error dialog
   static void showErrorDialog(
       {String title = 'Error', String? description = 'Something went wrong'}) {
-    Get.dialog(
-      AlertDialog.adaptive(
-        title: Text(
-          title,
-          style: textStyle16.copyWith(
-            fontWeight: FontWeight.w500,
+    if(GetPlatform.isWeb){
+      showSnackBar(title: title, message: description);
+    } else {
+      Get.dialog(
+        AlertDialog.adaptive(
+          title: Text(
+            title,
+            style: textStyle16.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
           ),
+          content: Text(
+            description ?? '',
+            style: textStyle14,
+          ),
+          actions: <Widget>[
+            if (Platform.isIOS || Platform.isMacOS) ...[
+              CupertinoDialogAction(
+                onPressed: () {
+                  if (Get.isDialogOpen!) Get.back();
+                },
+                child: const Text('Okay'),
+              ),
+            ] else ...[
+              TextButton(
+                onPressed: () {
+                  if (Get.isDialogOpen!) Get.back();
+                },
+                child: const Text('Okay'),
+              ),
+            ]
+          ],
         ),
-        content: Text(
-          description ?? '',
-          style: textStyle14,
-        ),
-        actions: <Widget>[
-          if (Platform.isIOS || Platform.isMacOS) ...[
-            CupertinoDialogAction(
-              onPressed: () {
-                if (Get.isDialogOpen!) Get.back();
-              },
-              child: const Text('Okay'),
-            ),
-          ] else ...[
-            TextButton(
-              onPressed: () {
-                if (Get.isDialogOpen!) Get.back();
-              },
-              child: const Text('Okay'),
-            ),
-          ]
-        ],
-      ),
-    );
+      );
+    }
+
   }
 
   //show toast

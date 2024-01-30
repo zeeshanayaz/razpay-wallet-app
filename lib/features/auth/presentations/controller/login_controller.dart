@@ -32,6 +32,7 @@ class LoginController extends GetxController {
     }).catchError(BaseController.handleError);
 
     if (response == null) return;
+    BaseController.hideLoading();
     if(kDebugMode) print(response);
   }
 }

@@ -22,6 +22,12 @@ class _LoginScreenState extends State<LoginScreen> {
   bool hidePassword = true;
 
   @override
+  void dispose() {
+    Get.delete<LoginController>();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
