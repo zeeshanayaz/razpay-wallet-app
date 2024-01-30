@@ -2,7 +2,12 @@ import 'dart:convert';
 
 class ErrorParserHelper {
   static errorParser(String err) {
-    var decodedError = jsonDecode(err)['message'];
+    dynamic decodedError;
+    if(jsonDecode(err).containsKey('message')) {
+      decodedError = jsonDecode(err)['message'];
+    } else {
+      decodedError = jsonDecode(err)['error'];
+    }
     if (decodedError.runtimeType == String) {
       return decodedError;
     }

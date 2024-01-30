@@ -45,11 +45,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 Column(
                   children: [
                     const SizedBoxH20(),
-                    CustomTextField(controller: loginController.email, hintText: "Email"),
+                    CustomTextField(
+                        controller: loginController.email,
+                        hintText: 'Email',
+                    ),
                     const SizedBoxH20(),
                     CustomTextFieldPassword(
                       controller: loginController.password,
-                      hintText: "Password",
+                      hintText: 'Password',
                       obsecure: hidePassword,
                       suffixIcon: GestureDetector(
                         onTap: () {

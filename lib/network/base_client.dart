@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:http/http.dart' as http;
 import 'api_constants.dart';
 import 'app_exceptions.dart';
+import 'error_parser_helper.dart';
 
 class BaseClient {
   //GET
@@ -56,13 +57,18 @@ class BaseClient {
         var responseJson = utf8.decode(response.bodyBytes);
         return responseJson;
       case 201:
-        var responseJson = utf8.decode(response.bodyBytes);
-        return responseJson;
+        // var responseJson = utf8.decode(response.bodyBytes);
+        // return responseJson;
+        var message = ErrorParserHelper.errorParser(utf8.decode(response.bodyBytes));
+        throw BadRequestException(message, response.request!.url.toString());
       case 400:
-        throw BadRequestException(utf8.decode(response.bodyBytes), response.request!.url.toString());
+        var message = ErrorParserHelper.errorParser(utf8.decode(response.bodyBytes));
+        throw BadRequestException(message, response.request!.url.toString());
       case 401:
       case 403:
-        throw UnAuthorizedException(utf8.decode(response.bodyBytes), response.request!.url.toString());
+      case 406:
+        var message = ErrorParserHelper.errorParser(utf8.decode(response.bodyBytes));
+        throw UnAuthorizedException(message, response.request!.url.toString());
       case 422:
         throw BadRequestException(utf8.decode(response.bodyBytes), response.request!.url.toString());
       case 500:
