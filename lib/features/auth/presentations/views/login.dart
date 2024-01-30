@@ -8,6 +8,8 @@ import 'package:razpay/core/text_field.dart';
 import 'package:razpay/core/text_field_password.dart';
 import 'package:razpay/router.dart';
 
+import '../controller/login_controller.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -16,9 +18,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-  bool showPassword = false;
+  final loginController = Get.put(LoginController());
+  bool hidePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -44,20 +45,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 Column(
                   children: [
                     const SizedBoxH20(),
-                    CustomTextField(controller: email, hintText: "Email"),
+                    CustomTextField(controller: loginController.email, hintText: "Email"),
                     const SizedBoxH20(),
                     CustomTextFieldPassword(
-                      controller: password,
+                      controller: loginController.password,
                       hintText: "Password",
-                      obsecure: showPassword,
+                      obsecure: hidePassword,
                       suffixIcon: GestureDetector(
                         onTap: () {
                           setState(() {
-                            showPassword = !showPassword;
+                            hidePassword = !hidePassword;
                           });
                         },
                         child: Icon(
-                          showPassword ? IconlyBold.hide : IconlyBold.show,
+                          hidePassword ? IconlyBold.hide : IconlyBold.show,
                         ),
                       ),
                     ),
@@ -79,7 +80,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBoxH30(),
                     CustomButton(
                       onPressed: () {
-                        Get.toNamed(AppRoutes.passcode);
+                        loginController.login();
+                        // Get.toNamed(AppRoutes.passcode);
                       },
                       text: 'Sign In',
                     ),

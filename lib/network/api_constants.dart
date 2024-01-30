@@ -1,0 +1,9 @@
+class ApiConstants {
+  static const int TIME_OUT_DURATION = 60;
+  static const String baseUrl = 'https://hpanel.molvault.com/api/';
+
+  static const networkErrorMessage = 'No Internet connection';
+  static const timeOutErrorMessage =
+      'Failed to communicate with the server in a reasonable amount of time. Please check your internet connection or try again later';
+  static const notRespondingMessage = 'Oops! It took longer to respond.';
+}

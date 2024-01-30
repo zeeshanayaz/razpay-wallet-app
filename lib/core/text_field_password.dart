@@ -65,6 +65,7 @@ class _CustomTextFieldPasswordState extends State<CustomTextFieldPassword> {
   Widget build(BuildContext context) {
     bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
     return TextFormField(
+      onTapOutside: (event) => FocusScope.of(context).unfocus(),
       enabled: widget.enabled,
       maxLength: widget.maxLength,
       keyboardType: widget.keyboardType,
