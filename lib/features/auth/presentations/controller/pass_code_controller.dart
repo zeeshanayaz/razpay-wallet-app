@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/constant.dart';
-import '../../../../core/dialog.dart';
+import '../../../../core/helper.dart';
 import '../../../../core/utils/shared_pref.dart';
 import '../../../../models/profile/profile.dart';
 import '../../../../network/api_routes.dart';
@@ -31,7 +31,7 @@ class PasscodeLoginController extends GetxController {
 
     var profileResponse = profileResponseFromJson(response);
     await SharedPref.setBool(kLoggedUser, true);
-    DialogHelper.showSnackBar(title: 'Wow!', message: profileResponse.message);
+    BaseHelper.showSnackBar(profileResponse.message);
     Get.offAllNamed(AppRoutes.mainHome);
   }
 }
