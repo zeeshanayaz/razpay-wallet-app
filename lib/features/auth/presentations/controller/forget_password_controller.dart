@@ -40,11 +40,18 @@ class ForgetPasswordController extends GetxController {
   }
 
   void resetPassword() async {
-    if(password.text.isEmpty || cpassword.text.isEmpty) {
-      BaseHelper.showSnackBar('Password cannot be empty', color: red);
+    String? passwordError = validatePassword(password.text);
+    if(passwordError != null) {
+      BaseHelper.showSnackBar(passwordError, color: red);
       return;
-    } else if(password.text != cpassword.text) {
-      BaseHelper.showSnackBar('Passwords do not match. Please ensure they are identical and try again.', color: red);
+    }
+    if(cpassword.text.isEmpty) {
+      BaseHelper.showSnackBar('Confirm password cannot be empty', color: red);
+      return;
+    }
+
+    if(password.text != cpassword.text) {
+      BaseHelper.showSnackBar('The confirm password field must match new password.', color: red);
       return;
     }
 
