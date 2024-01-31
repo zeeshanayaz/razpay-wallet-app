@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:razpay/core/colors.dart';
@@ -11,12 +12,16 @@ import 'package:razpay/features/transactions/presentations/views/transactions.da
 import 'package:razpay/theme.dart';
 import 'package:provider/provider.dart';
 
+import '../../../profile/controller/profile_controller.dart';
+
 class MainHomeNav extends StatefulWidget {
   @override
   _MainHomeNavState createState() => _MainHomeNavState();
 }
 
 class _MainHomeNavState extends State<MainHomeNav> {
+  final profileController = Get.put(ProfileController());
+
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [

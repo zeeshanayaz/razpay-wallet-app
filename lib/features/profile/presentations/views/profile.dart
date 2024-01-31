@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+
 // import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
@@ -24,7 +25,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final profileController = Get.put(ProfileController());
+  final profileController = Get.find<ProfileController>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,17 +41,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                child: Column(
-                  children: [
-                    Image.asset('assets/images/avatar.png'),
-                    SizedBoxH10(),
-                    Text(
-                      'Julia James',
-                      style: textStyle18.copyWith(
-                          fontWeight: FontWeight.w800, fontSize: 20),
-                    ),
-                  ],
+              Obx(
+                () => Center(
+                  child: Column(
+                    children: [
+                      profileController.profileData.value.avatar == null
+                          ? CircleAvatar(
+                              radius: 40.0,
+                              backgroundImage:
+                                  AssetImage('assets/images/avatar.png'),
+                              backgroundColor: Colors.transparent,
+                            )
+                          : CircleAvatar(
+                              radius: 40.0,
+                              backgroundImage: NetworkImage(
+                                  profileController.profileData.value.avatar ??
+                                      ''),
+                              backgroundColor: Colors.transparent,
+                            ),
+                      SizedBoxH10(),
+                      Text(
+                        '${profileController.profileData.value.firstName ?? ''} ${profileController.profileData.value.lastName ?? ''}',
+                        style: textStyle18.copyWith(
+                            fontWeight: FontWeight.w800, fontSize: 20),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBoxH20(),
@@ -92,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               //   style: textStyle14.copyWith(fontWeight: FontWeight.w400),
               // ),
               // const SizedBoxH10(),
-              GestureDetector(
+              InkWell(
                 onTap: () {
                   Get.toNamed(AppRoutes.myAccount);
                 },
@@ -182,7 +198,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         builder: (BuildContext context) {
-                          return AddModalBottonSheet();
+                          return AddModalButtonSheet();
                         },
                       );
                     },

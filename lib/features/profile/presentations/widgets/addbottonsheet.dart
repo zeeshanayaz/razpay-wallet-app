@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:razpay/core/button.dart';
 import 'package:razpay/core/colors.dart';
 import 'package:razpay/core/size_boxes.dart';
@@ -6,14 +7,16 @@ import 'package:razpay/core/style.dart';
 import 'package:razpay/theme.dart';
 import 'package:provider/provider.dart';
 
-class AddModalBottonSheet extends StatefulWidget {
-  const AddModalBottonSheet({super.key});
+import '../../controller/profile_controller.dart';
+
+class AddModalButtonSheet extends StatefulWidget {
+  const AddModalButtonSheet({super.key});
 
   @override
-  State<AddModalBottonSheet> createState() => _AddModalBottonSheetState();
+  State<AddModalButtonSheet> createState() => _AddModalButtonSheetState();
 }
 
-class _AddModalBottonSheetState extends State<AddModalBottonSheet> {
+class _AddModalButtonSheetState extends State<AddModalButtonSheet> {
   @override
   Widget build(BuildContext context) {
     bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
@@ -33,7 +36,8 @@ class _AddModalBottonSheetState extends State<AddModalBottonSheet> {
             const SizedBoxH30(),
             CustomButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                // Navigator.of(context).pop();
+                Get.find<ProfileController>().deleteAccount();
               },
               text: 'Proceed',
             ),
