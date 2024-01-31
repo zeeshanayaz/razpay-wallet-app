@@ -14,6 +14,8 @@ import 'package:razpay/router.dart';
 import 'package:razpay/theme.dart';
 import 'package:provider/provider.dart';
 
+import '../../controller/profile_controller.dart';
+
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -22,6 +24,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final profileController = Get.put(ProfileController());
+
   @override
   Widget build(BuildContext context) {
     bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
@@ -155,10 +159,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               LineDivider(
                 isDark: isDark,
               ),
-              ProfileLinkTile(
-                iconData: IconlyBold.logout,
-                text: 'Sign out',
-                icon: true,
+              InkWell(
+                onTap: () => profileController.logout(),
+                child: ProfileLinkTile(
+                  iconData: IconlyBold.logout,
+                  text: 'Sign out',
+                  icon: true,
+                ),
               ),
               SizedBoxH20(),
               Row(

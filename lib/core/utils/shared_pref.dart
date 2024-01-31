@@ -23,4 +23,9 @@ class SharedPref {
     final SharedPreferences pref = await _preferences;
     return pref.getBool(key);
   }
+
+  static deletePrefs(String key) async {
+    final SharedPreferences pref = await _preferences;
+    pref.remove(key);
+  }
 }

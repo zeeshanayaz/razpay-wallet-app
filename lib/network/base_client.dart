@@ -35,7 +35,7 @@ class BaseClient {
   }
 
   //POST
-  Future<dynamic> post(String endPoint, dynamic payloadObj, [dynamic queryParameters]) async {
+  Future<dynamic> post(String endPoint, [dynamic payloadObj, dynamic queryParameters]) async {
     final String token = await SharedPref.getString(kToken) ?? '';
     var uri = Uri.parse(ApiConstants.baseUrl + endPoint);
     var payload = jsonEncode(payloadObj);
