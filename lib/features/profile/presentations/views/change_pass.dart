@@ -5,7 +5,8 @@ import 'package:razpay/core/button.dart';
 import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/style.dart';
 import 'package:razpay/core/text_field_password.dart';
-import 'package:razpay/router.dart';
+
+import '../../controller/change_password_controller.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});
@@ -15,9 +16,17 @@ class ChangePassword extends StatefulWidget {
 }
 
 class _ChangePasswordState extends State<ChangePassword> {
-  bool showPassword = false;
-  bool showNewPassword = false;
-  bool showCPassword = false;
+  final changePasswordController = Get.put(ChangePasswordController());
+
+  bool hidePassword = true;
+  bool hideNewPassword = true;
+  bool hideCPassword = true;
+
+  @override
+  void dispose() {
+    Get.delete<ChangePasswordController>();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,49 +49,49 @@ class _ChangePasswordState extends State<ChangePassword> {
                   children: [
                     const SizedBoxH20(),
                     CustomTextFieldPassword(
-                      controller: TextEditingController(),
-                      hintText: "Password",
-                      obsecure: showPassword,
+                      controller: changePasswordController.password,
+                      hintText: 'Password',
+                      obsecure: hidePassword,
                       suffixIcon: GestureDetector(
                         onTap: () {
                           setState(() {
-                            showPassword = !showPassword;
+                            hidePassword = !hidePassword;
                           });
                         },
                         child: Icon(
-                          showPassword ? IconlyBold.hide : IconlyBold.show,
+                          hidePassword ? IconlyBold.hide : IconlyBold.show,
                         ),
                       ),
                     ),
                     const SizedBoxH20(),
                     CustomTextFieldPassword(
-                      controller: TextEditingController(),
-                      hintText: "New Password",
-                      obsecure: showNewPassword,
+                      controller: changePasswordController.newPassword,
+                      hintText: 'New Password',
+                      obsecure: hideNewPassword,
                       suffixIcon: GestureDetector(
                         onTap: () {
                           setState(() {
-                            showNewPassword = !showNewPassword;
+                            hideNewPassword = !hideNewPassword;
                           });
                         },
                         child: Icon(
-                          showNewPassword ? IconlyBold.hide : IconlyBold.show,
+                          hideNewPassword ? IconlyBold.hide : IconlyBold.show,
                         ),
                       ),
                     ),
                     const SizedBoxH20(),
                     CustomTextFieldPassword(
-                      controller: TextEditingController(),
-                      hintText: "Confirm New Password",
-                      obsecure: showCPassword,
+                      controller: changePasswordController.newCPassword,
+                      hintText: 'Confirm New Password',
+                      obsecure: hideCPassword,
                       suffixIcon: GestureDetector(
                         onTap: () {
                           setState(() {
-                            showCPassword = !showCPassword;
+                            hideCPassword = !hideCPassword;
                           });
                         },
                         child: Icon(
-                          showCPassword ? IconlyBold.hide : IconlyBold.show,
+                          hideCPassword ? IconlyBold.hide : IconlyBold.show,
                         ),
                       ),
                     ),
@@ -94,7 +103,7 @@ class _ChangePasswordState extends State<ChangePassword> {
               children: [
                 CustomButton(
                   onPressed: () {
-                    Get.toNamed(AppRoutes.login);
+                    changePasswordController.changePassword();
                   },
                   text: 'Change Password',
                 ),

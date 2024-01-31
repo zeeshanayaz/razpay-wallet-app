@@ -6,5 +6,6 @@ class ApiRoutes {
   static String logout = 'logout';
   static String delete = 'delete';
   static String profile = 'profile';
+  static String changePassword = 'change-password';
 
 }

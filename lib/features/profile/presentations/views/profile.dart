@@ -121,7 +121,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               LineDivider(
                 isDark: isDark,
               ),
-              GestureDetector(
+              InkWell(
                 onTap: () {
                   Get.toNamed(AppRoutes.changePassword);
                 },
