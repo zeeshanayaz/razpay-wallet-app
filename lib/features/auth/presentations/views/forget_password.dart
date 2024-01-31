@@ -4,7 +4,8 @@ import 'package:razpay/core/button.dart';
 import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/style.dart';
 import 'package:razpay/core/text_field.dart';
-import 'package:razpay/router.dart';
+
+import '../controller/forget_password_controller.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
@@ -14,7 +15,8 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
-  TextEditingController email = TextEditingController();
+  final forgetPasswordController = Get.put(ForgetPasswordController());
+  
   @override
   Widget build(BuildContext context) {
     // bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
@@ -45,8 +47,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     ),
                     const SizedBoxH20(),
                     CustomTextField(
-                      controller: email,
-                      hintText: "Email address",
+                      controller: forgetPasswordController.email,
+                      hintText: 'Email address',
+                      keyboardType: TextInputType.emailAddress,
                     ),
                   ],
                 ),
@@ -56,7 +59,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               children: [
                 CustomButton(
                   onPressed: () {
-                    Get.toNamed(AppRoutes.forgotPasswordVerification);
+                    forgetPasswordController.sendOtpForgetPassword();
                   },
                   text: 'Continue',
                 ),

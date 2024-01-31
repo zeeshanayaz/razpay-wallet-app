@@ -4,7 +4,8 @@ import 'package:iconly/iconly.dart';
 import 'package:razpay/core/button.dart';
 import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/text_field_password.dart';
-import 'package:razpay/router.dart';
+
+import '../controller/forget_password_controller.dart';
 
 class CreateNewPassword extends StatefulWidget {
   const CreateNewPassword({super.key});
@@ -14,10 +15,10 @@ class CreateNewPassword extends StatefulWidget {
 }
 
 class _CreateNewPasswordState extends State<CreateNewPassword> {
-  TextEditingController password = TextEditingController();
-  TextEditingController cpassword = TextEditingController();
-  bool showPassword = false;
-  bool showCPassword = false;
+  final forgetPasswordController = Get.find<ForgetPasswordController>();
+  
+  bool hidePassword = true;
+  bool hideCPassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -40,33 +41,33 @@ class _CreateNewPasswordState extends State<CreateNewPassword> {
                   children: [
                     const SizedBoxH20(),
                     CustomTextFieldPassword(
-                      controller: password,
-                      hintText: "Password",
-                      obsecure: showPassword,
+                      controller: forgetPasswordController.password,
+                      hintText: 'Password',
+                      obsecure: hidePassword,
                       suffixIcon: GestureDetector(
                         onTap: () {
                           setState(() {
-                            showPassword = !showPassword;
+                            hidePassword = !hidePassword;
                           });
                         },
                         child: Icon(
-                          showPassword ? IconlyBold.hide : IconlyBold.show,
+                          hidePassword ? IconlyBold.hide : IconlyBold.show,
                         ),
                       ),
                     ),
                     const SizedBoxH20(),
                     CustomTextFieldPassword(
-                      controller: password,
-                      hintText: "Confirm Password",
-                      obsecure: showCPassword,
+                      controller: forgetPasswordController.cpassword,
+                      hintText: 'Confirm Password',
+                      obsecure: hideCPassword,
                       suffixIcon: GestureDetector(
                         onTap: () {
                           setState(() {
-                            showCPassword = !showCPassword;
+                            hideCPassword = !hideCPassword;
                           });
                         },
                         child: Icon(
-                          showPassword ? IconlyBold.hide : IconlyBold.show,
+                          hidePassword ? IconlyBold.hide : IconlyBold.show,
                         ),
                       ),
                     ),
@@ -79,7 +80,7 @@ class _CreateNewPasswordState extends State<CreateNewPassword> {
               children: [
                 CustomButton(
                   onPressed: () {
-                    Get.toNamed(AppRoutes.login);
+                    forgetPasswordController.resetPassword();
                   },
                   text: 'Reset Password',
                 ),

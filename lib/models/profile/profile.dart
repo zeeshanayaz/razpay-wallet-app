@@ -44,7 +44,7 @@ class Profile {
   String? status;
   String? kyc;
   String? avatar;
-  int? isDeleted;
+  dynamic isDeleted;
   String? createdAt;
   String? updatedAt;
   String? token;

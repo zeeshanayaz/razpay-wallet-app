@@ -1,4 +1,8 @@
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../router.dart';
+import '../constant.dart';
 
 class SharedPref {
   static final Future<SharedPreferences> _preferences =
@@ -27,5 +31,12 @@ class SharedPref {
   static deletePrefs(String key) async {
     final SharedPreferences pref = await _preferences;
     pref.remove(key);
+  }
+
+  static logout() async {
+    await SharedPref.deletePrefs(kToken);
+    await SharedPref.deletePrefs(kLoggedUser);
+    Get.deleteAll();
+    Get.offAllNamed(AppRoutes.onboarding);
   }
 }

@@ -73,6 +73,8 @@ class BaseClient {
         var message = ErrorParserHelper.errorParser(utf8.decode(response.bodyBytes));
         throw BadRequestException(message, response.request!.url.toString());
       case 401:
+        SharedPref.logout();
+        return;
       case 403:
       case 406:
         var message = ErrorParserHelper.errorParser(utf8.decode(response.bodyBytes));

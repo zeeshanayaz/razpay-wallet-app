@@ -9,6 +9,8 @@ import 'package:razpay/core/style.dart';
 import 'package:razpay/router.dart';
 import 'package:razpay/theme.dart';
 
+import '../controller/forget_password_controller.dart';
+
 class ResetVerificationScreen extends StatefulWidget {
   const ResetVerificationScreen({super.key});
 
@@ -18,8 +20,8 @@ class ResetVerificationScreen extends StatefulWidget {
 }
 
 class _ResetVerificationScreenState extends State<ResetVerificationScreen> {
-  TextEditingController pin = TextEditingController();
-  TextEditingController password = TextEditingController();
+  final forgetPasswordController = Get.find<ForgetPasswordController>();
+
   @override
   Widget build(BuildContext context) {
     bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
@@ -43,7 +45,7 @@ class _ResetVerificationScreenState extends State<ResetVerificationScreen> {
             const SizedBoxH30(),
             Center(
               child: Pinput(
-                controller: pin,
+                controller: forgetPasswordController.pin,
                 obscureText: false,
                 keyboardType: TextInputType.number,
                 keyboardAppearance: Brightness.light,
@@ -147,7 +149,9 @@ class _ResetVerificationScreenState extends State<ResetVerificationScreen> {
             // const SizedBoxH30(),
             CustomButton(
               onPressed: () {
-                Get.toNamed(AppRoutes.createNewPassword);
+                if(forgetPasswordController.pin.text.length == 4) {
+                  Get.toNamed(AppRoutes.createNewPassword);
+                }
               },
               text: 'Verify',
             ),
