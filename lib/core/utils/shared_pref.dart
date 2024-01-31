@@ -37,6 +37,6 @@ class SharedPref {
     await SharedPref.deletePrefs(kToken);
     await SharedPref.deletePrefs(kLoggedUser);
     Get.deleteAll();
-    Get.offAllNamed(AppRoutes.onboarding);
+    Get.offAllNamed(AppRoutes.login);
   }
 }

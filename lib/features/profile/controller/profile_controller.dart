@@ -48,7 +48,7 @@ class ProfileController extends GetxController {
     await SharedPref.deletePrefs(kLoggedUser);
     Get.deleteAll();
     BaseHelper.showSnackBar(logoutResponse.message);
-    Get.offAllNamed(AppRoutes.onboarding);
+    Get.offAllNamed(AppRoutes.login);
   }
 
   void deleteAccount() async {
