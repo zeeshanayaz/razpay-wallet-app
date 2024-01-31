@@ -4,6 +4,8 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:http/http.dart' as http;
+import '../core/constant.dart';
+import '../core/utils/shared_pref.dart';
 import 'api_constants.dart';
 import 'app_exceptions.dart';
 import 'error_parser_helper.dart';
@@ -11,11 +13,16 @@ import 'error_parser_helper.dart';
 class BaseClient {
   //GET
   Future<dynamic> get(String endPoint) async {
+    final String token = await SharedPref.getString(kToken) ?? '';
     var uri = Uri.parse(ApiConstants.baseUrl + endPoint);
     try {
       if (kDebugMode) print('API Calling $uri');
 
-      var response = await http.get(uri).timeout(const Duration(seconds: ApiConstants.TIME_OUT_DURATION));
+      var response = await http.get(uri,
+        headers: {
+          "Authorization": "Bearer $token",
+          "content-type": "application/json"
+        },).timeout(const Duration(seconds: ApiConstants.TIME_OUT_DURATION));
 
       if (kDebugMode) print('API: $uri Response Status Code ${response.statusCode}');
 
@@ -29,6 +36,7 @@ class BaseClient {
 
   //POST
   Future<dynamic> post(String endPoint, dynamic payloadObj, [dynamic queryParameters]) async {
+    final String token = await SharedPref.getString(kToken) ?? '';
     var uri = Uri.parse(ApiConstants.baseUrl + endPoint);
     var payload = jsonEncode(payloadObj);
     try {
@@ -36,7 +44,7 @@ class BaseClient {
 
       var response = await http.post(uri,
           headers: {
-            // "Authorization": "Bearer " + _token,
+            "Authorization": "Bearer $token",
             "content-type": "application/json"
           },
           body: payload).timeout(const Duration(seconds: ApiConstants.TIME_OUT_DURATION));

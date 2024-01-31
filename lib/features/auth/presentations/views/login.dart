@@ -54,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     CustomTextField(
                         controller: loginController.email,
                         hintText: 'Email',
+                      keyboardType: TextInputType.emailAddress,
                     ),
                     const SizedBoxH20(),
                     CustomTextFieldPassword(
@@ -90,7 +91,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     CustomButton(
                       onPressed: () {
                         loginController.login();
-                        // Get.toNamed(AppRoutes.passcode);
                       },
                       text: 'Sign In',
                     ),

@@ -6,8 +6,9 @@ import 'package:provider/provider.dart';
 import 'package:razpay/core/colors.dart';
 import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/style.dart';
-import 'package:razpay/router.dart';
 import 'package:razpay/theme.dart';
+
+import '../controller/pass_code_controller.dart';
 
 class PasscodeLoginScreen extends StatefulWidget {
   const PasscodeLoginScreen({super.key});
@@ -17,8 +18,14 @@ class PasscodeLoginScreen extends StatefulWidget {
 }
 
 class _PasscodeLoginScreenState extends State<PasscodeLoginScreen> {
-  TextEditingController pin = TextEditingController();
+  final passcodeLoginController = Get.put(PasscodeLoginController());
   String pinInput = '';
+
+  @override
+  void dispose() {
+    Get.delete<PasscodeLoginController>();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +55,7 @@ class _PasscodeLoginScreenState extends State<PasscodeLoginScreen> {
                   const SizedBoxH30(),
                   const SizedBoxH30(),
                   Pinput(
-                    controller: pin,
+                    controller: passcodeLoginController.pin,
                     obscureText: true,
                     keyboardType: TextInputType.none,
                     keyboardAppearance: Brightness.light,
@@ -71,7 +78,7 @@ class _PasscodeLoginScreenState extends State<PasscodeLoginScreen> {
                     hapticFeedbackType: HapticFeedbackType.lightImpact,
                     length: 4,
                     onCompleted: (pin) {
-                      Get.toNamed(AppRoutes.mainHome);
+                      passcodeLoginController.loginWithPassCode();
                     },
                     onChanged: (value) {
                       setState(() {
@@ -187,17 +194,17 @@ class _PasscodeLoginScreenState extends State<PasscodeLoginScreen> {
   }
 
   void _handleDelete() {
-    String currentText = pin.text;
+    String currentText = passcodeLoginController.pin.text;
     if (currentText.isNotEmpty) {
       String updatedText = currentText.substring(0, currentText.length - 1);
-      pin.text = updatedText;
+      passcodeLoginController.pin.text = updatedText;
     }
   }
 
   void _handleButtonPress(String button) {
-    String currentText = pin.text;
+    String currentText = passcodeLoginController.pin.text;
     String updatedText = currentText + button;
-    pin.text = updatedText;
+    passcodeLoginController.pin.text = updatedText;
   }
 
   final List<String> buttons = [

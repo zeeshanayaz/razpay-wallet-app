@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Future.delayed(
-      const Duration(seconds: 5),
+      const Duration(seconds: 3),
       () {
         nextScreen();
       },
@@ -27,11 +27,21 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void nextScreen() async {
     bool firstTime = await SharedPref.getBool(kFirstTime) ?? true;
-    if (!firstTime) {
+    if (firstTime) {
       Get.offAndToNamed(AppRoutes.onboarding);
       // }
     } else {
-      Get.offAndToNamed(AppRoutes.onboarding);
+      String hasToken = await SharedPref.getString(kToken) ?? '';
+      bool hasLoggedUser = await SharedPref.getBool(kLoggedUser) ?? false;
+      if(hasToken.isNotEmpty) {
+        if(hasLoggedUser) {
+          Get.offAllNamed(AppRoutes.mainHome);
+        } else {
+          Get.offAndToNamed(AppRoutes.passcode);
+        }
+      } else {
+        Get.offAndToNamed(AppRoutes.login);
+      }
     }
   }
 
