@@ -14,6 +14,7 @@ class CustomTextField extends StatefulWidget {
   final VoidCallback? onTap;
   final VoidCallback? onEditingCompleted;
   final TextInputType? keyboardType;
+  final TextCapitalization? textCapitalization;
   final ValueChanged<String>? onChanged;
   final bool? isMulti;
   final bool? autofocus;
@@ -35,6 +36,7 @@ class CustomTextField extends StatefulWidget {
     required this.controller,
     this.validator,
     this.keyboardType = TextInputType.text,
+    this.textCapitalization = TextCapitalization.none,
     this.obsecure,
     this.onTap,
     this.isMulti = false,
@@ -70,6 +72,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       enabled: widget.enabled,
       maxLength: widget.maxLength,
       keyboardType: widget.keyboardType,
+      textCapitalization: widget.textCapitalization ?? TextCapitalization.none,
       onChanged: widget.onChanged,
       onEditingComplete: widget.onEditingCompleted,
       controller: widget.controller,

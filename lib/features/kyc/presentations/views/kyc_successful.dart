@@ -49,7 +49,7 @@ class _KYCSuccessfulScreenState extends State<KYCSuccessfulScreen> {
                 children: [
                   CustomButton(
                     onPressed: () {
-                      Get.toNamed(AppRoutes.mainHome);
+                      Get.offAllNamed(AppRoutes.mainHome);
                     },
                     text: 'Proceed to Portfolio',
                   ),

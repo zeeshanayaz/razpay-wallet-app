@@ -10,6 +10,8 @@ import 'package:razpay/core/style.dart';
 import 'package:razpay/router.dart';
 import 'package:razpay/theme.dart';
 
+import '../controller/create_pin_controller.dart';
+
 class CreatePinScreen extends StatefulWidget {
   const CreatePinScreen({super.key});
 
@@ -18,8 +20,14 @@ class CreatePinScreen extends StatefulWidget {
 }
 
 class _CreatePinScreenState extends State<CreatePinScreen> {
-  TextEditingController pin = TextEditingController();
+  final createPinController = Get.put(CreatePinController());
   String pinInput = '';
+
+  @override
+  void dispose() {
+    Get.delete<CreatePinController>();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +56,7 @@ class _CreatePinScreenState extends State<CreatePinScreen> {
                   const SizedBoxH30(),
                   const SizedBoxH30(),
                   Pinput(
-                    controller: pin,
+                    controller: createPinController.pin,
                     obscureText: true,
                     keyboardType: TextInputType.none,
                     keyboardAppearance: Brightness.light,
@@ -71,7 +79,9 @@ class _CreatePinScreenState extends State<CreatePinScreen> {
                     hapticFeedbackType: HapticFeedbackType.lightImpact,
                     length: 4,
                     onCompleted: (pin) {
-                      Get.toNamed(AppRoutes.confirmPin);
+                      if(createPinController.pin.text.length == 4) {
+                        Get.toNamed(AppRoutes.confirmPin);
+                      }
                     },
                     onChanged: (value) {
                       setState(() {
@@ -133,7 +143,9 @@ class _CreatePinScreenState extends State<CreatePinScreen> {
                   // const SizedBoxH30(),
                   CustomButton(
                     onPressed: () {
-                      Get.toNamed(AppRoutes.confirmPin);
+                      if(createPinController.pin.text.length == 4) {
+                        Get.toNamed(AppRoutes.confirmPin);
+                      }
                     },
                     text: 'Continue',
                   ),
@@ -194,17 +206,17 @@ class _CreatePinScreenState extends State<CreatePinScreen> {
   }
 
   void _handleDelete() {
-    String currentText = pin.text;
+    String currentText = createPinController.pin.text;
     if (currentText.isNotEmpty) {
       String updatedText = currentText.substring(0, currentText.length - 1);
-      pin.text = updatedText;
+      createPinController.pin.text = updatedText;
     }
   }
 
   void _handleButtonPress(String button) {
-    String currentText = pin.text;
+    String currentText = createPinController.pin.text;
     String updatedText = currentText + button;
-    pin.text = updatedText;
+    createPinController.pin.text = updatedText;
   }
 
   final List<String> buttons = [

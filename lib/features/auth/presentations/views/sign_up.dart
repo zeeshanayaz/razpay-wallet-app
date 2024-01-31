@@ -11,6 +11,8 @@ import 'package:razpay/core/text_field.dart';
 import 'package:razpay/router.dart';
 import 'package:razpay/theme.dart';
 
+import '../controller/sign_up_controller.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -19,12 +21,15 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  TextEditingController firstName = TextEditingController();
-  TextEditingController lastName = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-  bool agreed = false;
-  bool showPassword = false;
+  final signUpController = Get.put(SignUpController());
+  bool hidePassword = true;
+
+  @override
+  void dispose() {
+    Get.delete<SignUpController>();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
@@ -57,39 +62,43 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 children: [
                   const SizedBoxH20(),
                   CustomTextField(
-                    controller: firstName,
-                    hintText: "First Name",
+                    controller: signUpController.firstName,
+                    hintText: 'First Name',
+                    textCapitalization: TextCapitalization.words,
                   ),
                   const SizedBoxH20(),
                   CustomTextField(
-                    controller: lastName,
-                    hintText: "Last Name",
+                    controller: signUpController.lastName,
+                    hintText: 'Last Name',
+                    textCapitalization: TextCapitalization.words,
                   ),
                   const SizedBoxH20(),
                   CustomTextField(
-                    controller: email,
-                    hintText: "Email",
+                    controller: signUpController.email,
+                    hintText: 'Email',
+                    keyboardType: TextInputType.emailAddress,
                   ),
                   const SizedBoxH20(),
                   CustomTextFieldPassword(
-                    controller: password,
-                    hintText: "Password",
-                    obsecure: showPassword,
+                    controller: signUpController.password,
+                    hintText: 'Password',
+                    obsecure: hidePassword,
                     suffixIcon: GestureDetector(
                       onTap: () {
                         setState(() {
-                          showPassword = !showPassword;
+                          hidePassword = !hidePassword;
                         });
                       },
                       child: Icon(
-                        showPassword ? IconlyBold.hide : IconlyBold.show,
+                        hidePassword ? IconlyBold.hide : IconlyBold.show,
                       ),
                     ),
                   ),
                   const SizedBoxH20(),
                   CustomTextField(
-                    controller: TextEditingController(),
-                    hintText: "Country",
+                    controller: signUpController.country,
+                    hintText: 'Country',
+                    textCapitalization: TextCapitalization.words,
                     suffixIcon: const Icon(
                       Icons.arrow_drop_down,
                     ),
@@ -109,18 +118,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       //     });
                       //   },
                       // ),
-                      GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              agreed = !agreed;
-                            });
-                          },
-                          child: agreed
+                      Obx(() => GestureDetector(
+                          onTap: () => signUpController.agreed(!signUpController.agreed.value),
+                          child: signUpController.agreed.value
                               ? const Icon(
-                                  Icons.check_box,
-                                  color: primary,
-                                )
-                              : const Icon(Icons.check_box_outline_blank)),
+                            Icons.check_box,
+                            color: primary,
+                          )
+                              : const Icon(Icons.check_box_outline_blank)),),
                       const SizedBoxW10(),
                       Expanded(
                         child: RichText(
@@ -165,7 +170,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBoxH30(),
                   CustomButton(
                     onPressed: () {
-                      Get.toNamed(AppRoutes.createPin);
+                      signUpController.register();
+                      // Get.toNamed(AppRoutes.createPin);
                     },
                     text: 'Sign Up',
                   ),

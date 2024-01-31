@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,8 +8,9 @@ import 'package:provider/provider.dart';
 import 'package:razpay/core/colors.dart';
 import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/style.dart';
-import 'package:razpay/router.dart';
 import 'package:razpay/theme.dart';
+
+import '../controller/create_pin_controller.dart';
 
 class ConfirmPinScreen extends StatefulWidget {
   const ConfirmPinScreen({super.key});
@@ -20,7 +20,7 @@ class ConfirmPinScreen extends StatefulWidget {
 }
 
 class _ConfirmPinScreenState extends State<ConfirmPinScreen> {
-  TextEditingController pin = TextEditingController();
+  final createPinController = Get.find<CreatePinController>();
   String pinInput = '';
 
   @override
@@ -50,7 +50,7 @@ class _ConfirmPinScreenState extends State<ConfirmPinScreen> {
                   const SizedBoxH30(),
                   const SizedBoxH30(),
                   Pinput(
-                    controller: pin,
+                    controller: createPinController.confirmPin,
                     obscureText: true,
                     keyboardType: TextInputType.none,
                     keyboardAppearance: Brightness.light,
@@ -73,7 +73,9 @@ class _ConfirmPinScreenState extends State<ConfirmPinScreen> {
                     hapticFeedbackType: HapticFeedbackType.lightImpact,
                     length: 4,
                     onCompleted: (pin) {
-                      Get.toNamed(AppRoutes.kycInfo);
+                      if(createPinController.pin.text.length == 4) {
+                        createPinController.createPin();
+                      }
                     },
                     onChanged: (value) {},
                     cursor: Column(
@@ -131,8 +133,9 @@ class _ConfirmPinScreenState extends State<ConfirmPinScreen> {
                   // const SizedBoxH30(),
                   CustomButton(
                     onPressed: () {
-                      log('message');
-                      Get.toNamed(AppRoutes.kycInfo);
+                      if(createPinController.pin.text.length == 4) {
+                        createPinController.createPin();
+                      }
                     },
                     text: 'Continue',
                   ),
@@ -193,17 +196,17 @@ class _ConfirmPinScreenState extends State<ConfirmPinScreen> {
   }
 
   void _handleDelete() {
-    String currentText = pin.text;
+    String currentText = createPinController.confirmPin.text;
     if (currentText.isNotEmpty) {
       String updatedText = currentText.substring(0, currentText.length - 1);
-      pin.text = updatedText;
+      createPinController.confirmPin.text = updatedText;
     }
   }
 
   void _handleButtonPress(String button) {
-    String currentText = pin.text;
+    String currentText = createPinController.confirmPin.text;
     String updatedText = currentText + button;
-    pin.text = updatedText;
+    createPinController.confirmPin.text = updatedText;
   }
 
   final List<String> buttons = [
