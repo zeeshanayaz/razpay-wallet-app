@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 import 'package:razpay/core/colors.dart';
 import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/style.dart';
-import 'package:razpay/router.dart';
 import 'package:razpay/theme.dart';
 import 'package:provider/provider.dart';
+
+import '../../controllers/kyc_controller.dart';
 
 class KYCChooseDocumentScreen extends StatefulWidget {
   const KYCChooseDocumentScreen({super.key});
@@ -16,6 +17,8 @@ class KYCChooseDocumentScreen extends StatefulWidget {
 }
 
 class _KYCChooseDocumentScreenState extends State<KYCChooseDocumentScreen> {
+  final kycInformationController = Get.find<KYCInformationController>();
+
   @override
   Widget build(BuildContext context) {
     bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
@@ -45,7 +48,7 @@ class _KYCChooseDocumentScreenState extends State<KYCChooseDocumentScreen> {
               title: 'Passport',
               img: 'passport.png',
               onPress: () {
-                Get.toNamed(AppRoutes.kyDoc);
+                kycInformationController.navigateToKycDoc('Passport');
               },
             ),
             docType(
@@ -53,7 +56,7 @@ class _KYCChooseDocumentScreenState extends State<KYCChooseDocumentScreen> {
               title: 'Identity Card',
               img: 'id-card.png',
               onPress: () {
-                Get.toNamed(AppRoutes.kyDoc);
+                kycInformationController.navigateToKycDoc('Identity Card');
               },
             ),
             docType(
@@ -61,7 +64,7 @@ class _KYCChooseDocumentScreenState extends State<KYCChooseDocumentScreen> {
               title: 'Digital Document',
               img: 'digital-doc.png',
               onPress: () {
-                Get.toNamed(AppRoutes.kyDoc);
+                kycInformationController.navigateToKycDoc('Digital Document');
               },
             ),
           ],

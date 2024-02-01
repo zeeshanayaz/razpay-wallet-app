@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:razpay/core/button.dart';
 import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/style.dart';
-import 'package:razpay/router.dart';
+
+import '../../controllers/kyc_controller.dart';
 // import 'package:razpay/theme.dart';
 // import 'package:provider/provider.dart';
 
@@ -15,6 +16,8 @@ class KYCDocumentBackScreen extends StatefulWidget {
 }
 
 class _KYCDocumentBackScreenState extends State<KYCDocumentBackScreen> {
+  final kycInformationController = Get.find<KYCInformationController>();
+
   @override
   Widget build(BuildContext context) {
     // bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
@@ -40,8 +43,16 @@ class _KYCDocumentBackScreenState extends State<KYCDocumentBackScreen> {
               ],
             ),
             Center(
-              child: Image.asset(
-                'assets/images/back-card.png',
+              child: InkWell(
+                customBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                onTap: () {
+                  kycInformationController.pickImageBackFromCamera();
+                },
+                child: Image.asset(
+                  'assets/images/back-card.png',
+                ),
               ),
             ),
             Column(
@@ -49,7 +60,7 @@ class _KYCDocumentBackScreenState extends State<KYCDocumentBackScreen> {
                 CustomButton(
                   text: 'Next',
                   onPressed: () {
-                    Get.toNamed(AppRoutes.kycCompleted);
+                    kycInformationController.submitKycInformation();
                   },
                 ),
                 const SizedBoxH20(),

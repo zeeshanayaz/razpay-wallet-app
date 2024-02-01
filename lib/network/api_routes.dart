@@ -5,6 +5,7 @@ class ApiRoutes {
   static String resetPassword = 'reset-password';
   static String register = 'register';
   static String updatePin = 'update-pin';
+  static String kyc = 'kyc';
   static String logout = 'logout';
   static String delete = 'delete';
   static String profile = 'profile';
