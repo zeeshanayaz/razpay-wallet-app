@@ -15,6 +15,8 @@ import 'package:provider/provider.dart';
 import '../../../profile/controller/profile_controller.dart';
 
 class MainHomeNav extends StatefulWidget {
+  const MainHomeNav({super.key});
+
   @override
   _MainHomeNavState createState() => _MainHomeNavState();
 }

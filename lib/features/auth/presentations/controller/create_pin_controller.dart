@@ -36,6 +36,6 @@ class CreatePinController extends GetxController {
     var createPinResponse = generalResponseFromJson(response);
     await SharedPref.setBool(kLoggedUser, true);
     BaseHelper.showSnackBar(createPinResponse.message);
-    Get.toNamed(AppRoutes.kycInfo);
+    Get.offAllNamed(AppRoutes.kycInfo);
   }
 }

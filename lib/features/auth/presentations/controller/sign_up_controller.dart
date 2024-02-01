@@ -66,6 +66,6 @@ class SignUpController extends GetxController {
     var profileResponse = profileResponseFromJson(response);
     await SharedPref.setString(kToken, profileResponse.profile?.token ?? '');
     BaseHelper.showSnackBar(profileResponse.message);
-    Get.toNamed(AppRoutes.createPin);
+    Get.offAllNamed(AppRoutes.createPin);
   }
 }

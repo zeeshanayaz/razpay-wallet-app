@@ -56,8 +56,7 @@ class CustomTextFieldPassword extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CustomTextFieldPasswordState createState() =>
-      _CustomTextFieldPasswordState();
+  State<CustomTextFieldPassword> createState() => _CustomTextFieldPasswordState();
 }
 
 class _CustomTextFieldPasswordState extends State<CustomTextFieldPassword> {

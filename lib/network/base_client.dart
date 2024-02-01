@@ -22,7 +22,7 @@ class BaseClient {
         headers: {
           "Authorization": "Bearer $token",
           "content-type": "application/json"
-        },).timeout(const Duration(seconds: ApiConstants.TIME_OUT_DURATION));
+        },).timeout(const Duration(seconds: ApiConstants.timeOutDuration));
 
       if (kDebugMode) print('API: $uri Response Status Code ${response.statusCode}');
 
@@ -47,7 +47,7 @@ class BaseClient {
             "Authorization": "Bearer $token",
             "content-type": "application/json"
           },
-          body: payload).timeout(const Duration(seconds: ApiConstants.TIME_OUT_DURATION));
+          body: payload).timeout(const Duration(seconds: ApiConstants.timeOutDuration));
 
       if (kDebugMode) print('API: $uri Response Status Code ${response.statusCode}');
 

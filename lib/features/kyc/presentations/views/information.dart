@@ -62,7 +62,7 @@ class _KYCPersonalInformationState extends State<KYCPersonalInformation> {
                     CustomTextField(
                       controller: TextEditingController(),
                       hintText: 'Country',
-                      suffixIcon: Icon(
+                      suffixIcon: const Icon(
                         Icons.keyboard_arrow_down,
                       ),
                     ),

@@ -152,7 +152,7 @@ final appRouter = [
   ),
   GetPage(
     name: AppRoutes.mainHome,
-    page: () => MainHomeNav(),
+    page: () => const MainHomeNav(),
     binding: BindingsBuilder(() {}),
   ),
   GetPage(
