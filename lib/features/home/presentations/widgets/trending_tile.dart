@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:razpay/core/colors.dart';
 import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/style.dart';
+
+import '../../../../core/divider.dart';
+import '../../../../theme.dart';
 
 class TrendingTile extends StatelessWidget {
   final String icon;
@@ -23,58 +27,74 @@ class TrendingTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
+
+    return Column(
       children: [
+        const SizedBoxH15(),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SvgPicture.asset(
-              'assets/icons/$icon.svg',
-            ),
-            const SizedBoxW10(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
               children: [
-                Text(
-                  name,
-                  style: textStyle14.copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
+                CircleAvatar(
+                  radius: 20.0,
+                  backgroundImage: NetworkImage(icon),
+                  backgroundColor: Colors.transparent,
                 ),
-                Text(
-                  asset,
-                  style: textStyle12,
+                /*SvgPicture.asset(
+                  'assets/icons/$icon.svg',
+                ),*/
+                const SizedBoxW10(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name,
+                      style: textStyle14.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      asset.toUpperCase(),
+                      style: textStyle12,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Image.asset(
+                  goingUp
+                      ? 'assets/icons/green-wave.png'
+                      : 'assets/icons/red-wave.png',
+                ),
+                const SizedBoxW20(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      value,
+                      style: textStyle14.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      increasePer,
+                      style: textStyle12.copyWith(
+                        color: goingUp ? green : red,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ],
         ),
-        Row(
-          children: [
-            Image.asset(
-              goingUp
-                  ? 'assets/icons/green-wave.png'
-                  : 'assets/icons/red-wave.png',
-            ),
-            const SizedBoxW20(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  value,
-                  style: textStyle14.copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Text(
-                  increasePer,
-                  style: textStyle12.copyWith(
-                    color: goingUp ? green : red,
-                  ),
-                ),
-              ],
-            ),
-          ],
+        const SizedBoxH5(),
+        LineDivider(
+          isDark: isDark,
         ),
       ],
     );

@@ -95,4 +95,10 @@ class BaseHelper {
 
     return numericRegex.hasMatch(string);
   }
+
+  static formatStringToDecimal(String stringValue, [int decimal = 0]) {
+    double doubleValue = double.parse(stringValue);
+    String formattedValue = doubleValue.toStringAsFixed(decimal);
+    return formattedValue;
+  }
 }

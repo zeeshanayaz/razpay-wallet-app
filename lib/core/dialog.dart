@@ -83,4 +83,13 @@ class DialogHelper {
   static void hideLoading() {
     if (Get.isDialogOpen!) Get.back();
   }
+
+  static Widget loadingIndicator() {
+    return const Center(
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: CircularProgressIndicator.adaptive(),
+      ),
+    );
+  }
 }

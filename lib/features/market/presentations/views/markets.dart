@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:razpay/core/divider.dart';
 import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/style.dart';
 import 'package:razpay/features/home/presentations/widgets/trending_tile.dart';
 // import 'package:razpay/features/market/presentations/widgets/market_cap.dart';
 import 'package:razpay/router.dart';
-import 'package:razpay/theme.dart';
-import 'package:provider/provider.dart';
+
+import '../../../../core/dialog.dart';
+import '../../../../core/helper.dart';
+import '../../controllers/market_controller.dart';
 
 class MarketScreen extends StatefulWidget {
   const MarketScreen({super.key});
@@ -18,9 +19,16 @@ class MarketScreen extends StatefulWidget {
 }
 
 class _MarketScreenState extends State<MarketScreen> {
+  final marketController = Get.put(MarketController());
+
+  @override
+  void dispose() {
+    Get.delete<MarketController>();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
     return Scaffold(
       appBar: AppBar(
         leading: const SizedBoxW5(),
@@ -43,7 +51,7 @@ class _MarketScreenState extends State<MarketScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(15),
-        child: Column(
+        child: Obx(() => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // const Row(
@@ -76,7 +84,26 @@ class _MarketScreenState extends State<MarketScreen> {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            const SizedBoxH15(),
+
+            marketController.isLoadingMarket.isTrue
+                ? DialogHelper.loadingIndicator()
+                : Expanded(child: ListView.builder(
+              itemCount: marketController.market.length, // Replace this with your desired item count
+              itemBuilder: (context, index) {
+                var marketData = marketController.market[index];
+                // Replace this with your list item widget
+                return TrendingTile(
+                  name: marketData.currency ?? '',
+                  asset: marketData.currency ?? '',
+                  icon: marketData.icon ?? '',
+                  value: '\$${BaseHelper.formatStringToDecimal(marketData.usdValue ?? '0.0')}',
+                  goingUp: double.parse(marketData.status ?? '0.0') > 0,
+                  increasePer: '${BaseHelper.formatStringToDecimal(marketData.status ?? '0.0', 1)}%',
+                );
+              },
+            ),),
+
+            /*const SizedBoxH15(),
             const TrendingTile(
               name: 'Litecoin',
               asset: 'LTC',
@@ -124,9 +151,10 @@ class _MarketScreenState extends State<MarketScreen> {
               goingUp: true,
               increasePer: '2.6%',
             ),
-            const SizedBoxH40(),
+            const SizedBoxH40(),*/
+
           ],
-        ),
+        ),),
       ),
     );
   }

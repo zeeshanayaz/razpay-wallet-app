@@ -10,5 +10,6 @@ class ApiRoutes {
   static String delete = 'delete';
   static String profile = 'profile';
   static String changePassword = 'change-password';
+  static String market = 'market';
 
 }
