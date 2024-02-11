@@ -15,5 +15,6 @@ class ApiRoutes {
   static String notificationsSeen = 'notifications-seen';
   static String getTransaction = 'get-transaction';
   static String singleTransaction = 'single-transaction';
+  static String wallet = 'wallet';
 
 }

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:razpay/core/colors.dart';
 import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/style.dart';
 import 'package:razpay/core/utils/device.dart';
+
+import '../../../../core/dialog.dart';
+import '../../../../models/wallet/wallet.dart';
+import '../../controller/wallet_controller.dart';
 // import 'package:razpay/theme.dart';
 // import 'package:provider/provider.dart';
 
@@ -15,23 +20,35 @@ class ReceiveCryptoModal extends StatefulWidget {
 }
 
 class _ReceiveCryptoModalState extends State<ReceiveCryptoModal> {
-  String selectedCoin = 'Bitcoin';
-  List<String> coins = ['Bitcoin', 'Ethereum', 'Tether'];
+  final walletController = Get.put(WalletController());
+
+  @override
+  void dispose() {
+    Get.delete<WalletController>();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     // bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
     return SizedBox(
       // color: isDark ? darkbgColor : white,
       width: width(context),
-      child: Column(
+      child: Obx(() => Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: walletController.isLoading.isTrue
+            ? [
+          const SizedBoxH20(),
+              DialogHelper.loadingIndicator(),
+          const SizedBoxH20(),
+        ]
+            : [
           const SizedBoxH20(),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                for (var item in coins) coinWid(name: item),
+                for (var item in walletController.wallet) coinWid(wallet: item),
               ],
             ),
           ),
@@ -41,51 +58,57 @@ class _ReceiveCryptoModalState extends State<ReceiveCryptoModal> {
           ),
           const SizedBoxH20(),
           Text(
-            '1GN5KjC4aGKDcEqwe7a5gNZFVqP86jjLBf',
+            walletController.selectedWallet.value.address ?? '',
             style: textStyle14,
           ),
           const SizedBoxH20(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                children: [
-                  const Icon(
-                    Icons.copy,
-                  ),
-                  const SizedBoxW5(),
-                  Text(
-                    'Copy',
-                    style: textStyle14,
-                  ),
-                ],
+              InkWell(
+                onTap: () => walletController.copyAddressToClipboard(),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.copy,
+                    ),
+                    const SizedBoxW5(),
+                    Text(
+                      'Copy',
+                      style: textStyle14,
+                    ),
+                  ],
+                ),
               ),
               const SizedBoxW30(),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.share_rounded,
-                  ),
-                  const SizedBoxW5(),
-                  Text(
-                    'Share',
-                    style: textStyle14,
-                  ),
-                ],
+              InkWell(
+                onTap: () => walletController.shareAddress(),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.share_rounded,
+                    ),
+                    const SizedBoxW5(),
+                    Text(
+                      'Share',
+                      style: textStyle14,
+                    ),
+                  ],
+                ),
               )
             ],
           ),
           const SizedBoxH30(),
         ],
-      ),
+      ),),
     );
   }
 
-  Widget coinWid({required String name}) {
+  Widget coinWid({required WalletAddress wallet}) {
     return GestureDetector(
       onTap: () {
         setState(() {
-          selectedCoin = name;
+          walletController.selectedWallet(wallet);
         });
       },
       child: Container(
@@ -93,14 +116,14 @@ class _ReceiveCryptoModalState extends State<ReceiveCryptoModal> {
         margin: const EdgeInsets.only(left: 15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          border: Border.all(color: name == selectedCoin ? primary : grey),
+          border: Border.all(color: wallet.id == walletController.selectedWallet.value.id ? primary : grey),
         ),
         child: Row(
           children: [
             SvgPicture.asset(
-              name == 'Bitcoin'
+              (wallet.currency ?? '').toLowerCase() == 'btc'
                   ? 'assets/icons/btc.svg'
-                  : name == 'Ethereum'
+                  : (wallet.currency ?? '').toLowerCase() == 'eth'
                       ? 'assets/icons/eth.svg'
                       : 'assets/icons/binance.svg',
               width: 20,
@@ -108,7 +131,7 @@ class _ReceiveCryptoModalState extends State<ReceiveCryptoModal> {
             ),
             const SizedBoxW5(),
             Text(
-              name,
+              wallet.currency ?? '',
               style: textStyle12,
             ),
           ],
