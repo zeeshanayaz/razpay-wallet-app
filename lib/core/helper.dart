@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:razpay/core/colors.dart';
 
@@ -100,5 +101,11 @@ class BaseHelper {
     double doubleValue = double.parse(stringValue);
     String formattedValue = doubleValue.toStringAsFixed(decimal);
     return formattedValue;
+  }
+
+  static String formatDate(String dateString, String format) {
+    DateTime dateTime = DateTime.parse(dateString);
+    String formattedDate = DateFormat(format).format(dateTime);
+    return formattedDate;
   }
 }
