@@ -11,5 +11,7 @@ class ApiRoutes {
   static String profile = 'profile';
   static String changePassword = 'change-password';
   static String market = 'market';
+  static String notifications = 'notifications';
+  static String notificationsSeen = 'notifications-seen';
 
 }

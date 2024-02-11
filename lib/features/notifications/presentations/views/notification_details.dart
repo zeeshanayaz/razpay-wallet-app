@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:razpay/core/colors.dart';
 import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/style.dart';
 import 'package:razpay/theme.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../models/notification/notification.dart' as model;
 
 class NotificationDetail extends StatefulWidget {
   const NotificationDetail({super.key});
@@ -15,12 +18,15 @@ class NotificationDetail extends StatefulWidget {
 class _NotificationDetailState extends State<NotificationDetail> {
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> args = Get.arguments;
+    final model.Notification notificationData = args['notificationData'];
+
     bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          'Password Reset',
+        title: Text(
+          notificationData.title ?? '',
         ),
       ),
       body: Padding(
@@ -42,7 +48,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
                     children: [
                       const SizedBoxH25(),
                       Text(
-                        'Your password was changed, please contact support if this action was not done by you.',
+                        notificationData.description ?? '',
                         style: textStyle14,
                       ),
                     ],
