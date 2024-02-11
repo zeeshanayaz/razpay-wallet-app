@@ -7,9 +7,13 @@ import 'package:razpay/core/colors.dart';
 import 'package:razpay/core/divider.dart';
 import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/style.dart';
-// import 'package:razpay/router.dart';
+
 import 'package:razpay/theme.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../core/dialog.dart';
+import '../../../../core/helper.dart';
+import '../../controllers/transaction_controller.dart';
 
 class TransactionDetail extends StatefulWidget {
   const TransactionDetail({super.key});
@@ -19,6 +23,16 @@ class TransactionDetail extends StatefulWidget {
 }
 
 class _TransactionDetailState extends State<TransactionDetail> {
+  final transactionController = Get.find<TransactionController>();
+
+  @override
+  void initState() {
+    final Map<String, dynamic> args = Get.arguments;
+    final int transactionId = args['transactionId'];
+    transactionController.getSingleTransactionDetail(transactionId);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
@@ -29,163 +43,195 @@ class _TransactionDetailState extends State<TransactionDetail> {
           'Transaction Details',
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          children: [
-            const SizedBoxH20(),
-            Stack(
-              clipBehavior: Clip.none,
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(25),
-                  decoration: BoxDecoration(
-                    color: isDark ? darkGrey : white,
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: isDark
-                        ? []
-                        : const [
-                            BoxShadow(
-                              offset: Offset(1, 5),
-                              color: grey,
-                              blurRadius: 20,
-                              spreadRadius: 0,
-                            ),
-                            BoxShadow(
-                              offset: Offset(5, 1),
-                              color: grey,
-                              blurRadius: 20,
-                              spreadRadius: 0,
-                            ),
-                          ],
-                  ),
-                  child: Column(
-                    children: [
-                      const SizedBoxH25(),
-                      assetDetail(isDark),
-                      const SizedBoxH10(),
-                      LineDivider(
-                        isDark: isDark,
-                      ),
-                      const SizedBoxH10(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Withdrawal Fee',
-                            style: textStyle14,
+      body: Obx(
+        () => transactionController.isLoadingTransactionDetail.isTrue
+            ? DialogHelper.loadingIndicator()
+            : Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  children: [
+                    const SizedBoxH20(),
+                    Stack(
+                      clipBehavior: Clip.none,
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(25),
+                          decoration: BoxDecoration(
+                            color: isDark ? darkGrey : white,
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: isDark
+                                ? []
+                                : const [
+                                    BoxShadow(
+                                      offset: Offset(1, 5),
+                                      color: grey,
+                                      blurRadius: 20,
+                                      spreadRadius: 0,
+                                    ),
+                                    BoxShadow(
+                                      offset: Offset(5, 1),
+                                      color: grey,
+                                      blurRadius: 20,
+                                      spreadRadius: 0,
+                                    ),
+                                  ],
                           ),
-                          Text(
-                            '0.03 BTC',
-                            style: textStyle14.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                          child: Column(
+                            children: [
+                              const SizedBoxH25(),
+                              assetDetail(isDark),
+                              const SizedBoxH10(),
+                              LineDivider(
+                                isDark: isDark,
+                              ),
+                              const SizedBoxH10(),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Withdrawal Fee',
+                                    style: textStyle14,
+                                  ),
+                                  Text(
+                                    '${transactionController.transactionDetail.value.fees} ${transactionController.transactionDetail.value.coinId}',
+                                    style: textStyle14.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBoxH10(),
+                              LineDivider(
+                                isDark: isDark,
+                              ),
+                              const SizedBoxH10(),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Status',
+                                    style: textStyle14,
+                                  ),
+                                  Text(
+                                    (transactionController.transactionDetail
+                                                    .value.confirmations ??
+                                                0) ==
+                                            1
+                                        ? 'Confirmed'
+                                        : 'Sent',
+                                    style: textStyle14.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: (transactionController
+                                                      .transactionDetail
+                                                      .value
+                                                      .confirmations ??
+                                                  0) ==
+                                              1
+                                          ? green
+                                          : red,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBoxH10(),
+                              LineDivider(
+                                isDark: isDark,
+                              ),
+                              const SizedBoxH10(),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Timestamp',
+                                    style: textStyle14,
+                                  ),
+                                  Text(
+                                    BaseHelper.formatDate(
+                                        transactionController.transactionDetail
+                                                .value.createdAt ??
+                                            '',
+                                        'd MMMM, y\nh:mma'),
+                                    style: textStyle14.copyWith(
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBoxH10(),
+                              LineDivider(
+                                isDark: isDark,
+                              ),
+                              const SizedBoxH10(),
+                              Text(
+                                'Recipient Address',
+                                style: textStyle16.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBoxH5(),
+                              Text(
+                                transactionController
+                                        .transactionDetail.value.address ??
+                                    '',
+                                style: textStyle14,
+                              ),
+                              const SizedBoxH15(),
+                              Text(
+                                'Transaction ID',
+                                style: textStyle16.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBoxH5(),
+                              Text(
+                                transactionController
+                                        .transactionDetail.value.tnxid ??
+                                    '',
+                                style: textStyle14,
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      const SizedBoxH10(),
-                      LineDivider(
-                        isDark: isDark,
-                      ),
-                      const SizedBoxH10(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Status',
-                            style: textStyle14,
-                          ),
-                          Text(
-                            'Confirmed',
-                            style: textStyle14.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: green,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBoxH10(),
-                      LineDivider(
-                        isDark: isDark,
-                      ),
-                      const SizedBoxH10(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Timestamp',
-                            style: textStyle14,
-                          ),
-                          Text(
-                            '17 Dec, 2023\n12:00PM',
-                            style: textStyle14.copyWith(
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBoxH10(),
-                      LineDivider(
-                        isDark: isDark,
-                      ),
-                      const SizedBoxH10(),
-                      Text(
-                        'Recipient Address',
-                        style: textStyle16.copyWith(
-                          fontWeight: FontWeight.bold,
                         ),
-                      ),
-                      const SizedBoxH5(),
-                      Text(
-                        '1FfmbHfnpaZjKFvyi1okTjJJusN455paPH',
-                        style: textStyle14,
-                      ),
-                      const SizedBoxH15(),
-                      Text(
-                        'Transaction ID',
-                        style: textStyle16.copyWith(
-                          fontWeight: FontWeight.bold,
+                        Positioned(
+                          top: -20,
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: (transactionController.transactionDetail
+                                              .value.confirmations ??
+                                          0) ==
+                                      1
+                                  ? green
+                                  : red,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              IconlyBold.arrow_down_square,
+                              color: white,
+                            ),
+                          ),
+                          // child: Image.asset(
+                          //   'assets/icons/confirmed.png',
+                          // ),
                         ),
-                      ),
-                      const SizedBoxH5(),
-                      Text(
-                        '42be1f24024a3f016e0b9290d367b196778a3dac8cdfc871bfd428b412cbcaaa',
-                        style: textStyle14,
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  top: -20,
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: const BoxDecoration(
-                      color: green,
-                      shape: BoxShape.circle,
+                      ],
                     ),
-                    child: const Icon(
-                      IconlyBold.arrow_down_square,
-                      color: white,
-                    ),
-                  ),
-                  // child: Image.asset(
-                  //   'assets/icons/confirmed.png',
-                  // ),
+                    const SizedBoxH25(),
+                    CustomButton(
+                      onPressed: () {
+                        // Get.offAndToNamed(AppRoutes.mainHome);
+                        Get.back();
+                      },
+                      text: 'Back to Portfolio',
+                    )
+                  ],
                 ),
-              ],
-            ),
-            const SizedBoxH25(),
-            CustomButton(
-              onPressed: () {
-                // Get.offAndToNamed(AppRoutes.mainHome);
-                Get.back();
-              },
-              text: 'Back to Portfolio',
-            )
-          ],
-        ),
+              ),
       ),
     );
   }
@@ -213,13 +259,13 @@ class _TransactionDetailState extends State<TransactionDetail> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Bitcoin',
+                  transactionController.transactionDetail.value.coinId ?? '',
                   style: textStyle16.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  'BTC',
+                  transactionController.transactionDetail.value.coinId ?? '',
                   style: textStyle12,
                 ),
               ],
@@ -230,13 +276,13 @@ class _TransactionDetailState extends State<TransactionDetail> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '\$567.89',
+              '\$${transactionController.transactionDetail.value.amount}',
               style: textStyle16.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              '1.23456 BTC',
+              '${transactionController.transactionDetail.value.newBalance} ${transactionController.transactionDetail.value.coinId}',
               style: textStyle12,
             ),
           ],

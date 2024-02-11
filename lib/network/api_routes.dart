@@ -13,5 +13,7 @@ class ApiRoutes {
   static String market = 'market';
   static String notifications = 'notifications';
   static String notificationsSeen = 'notifications-seen';
+  static String getTransaction = 'get-transaction';
+  static String singleTransaction = 'single-transaction';
 
 }

@@ -7,6 +7,7 @@ import 'package:razpay/core/style.dart';
 import 'package:razpay/router.dart';
 
 class TransactionTile extends StatelessWidget {
+  final int id;
   final bool isDark;
   final String asset;
   final String val;
@@ -14,6 +15,7 @@ class TransactionTile extends StatelessWidget {
   final String status;
   const TransactionTile({
     super.key,
+    required this.id,
     required this.asset,
     required this.val,
     required this.isDark,
@@ -25,7 +27,12 @@ class TransactionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(AppRoutes.transactionDetails);
+        Get.toNamed(
+          AppRoutes.transactionDetails,
+          arguments: {
+            'transactionId': id,
+          },
+        );
       },
       child: Container(
         padding: const EdgeInsets.all(10),
