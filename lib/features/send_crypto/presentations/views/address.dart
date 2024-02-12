@@ -6,6 +6,9 @@ import 'package:razpay/core/style.dart';
 import 'package:razpay/core/text_field.dart';
 import 'package:razpay/router.dart';
 
+import '../../../home/controller/wallet_controller.dart';
+import '../../controller/send_coin_controller.dart';
+
 class SendCryptoAddress extends StatefulWidget {
   const SendCryptoAddress({super.key});
 
@@ -14,6 +17,9 @@ class SendCryptoAddress extends StatefulWidget {
 }
 
 class _SendCryptoAddressState extends State<SendCryptoAddress> {
+  final walletController = Get.find<WalletController>();
+  final coinController = Get.find<SendCoinController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +49,7 @@ class _SendCryptoAddressState extends State<SendCryptoAddress> {
                 ),
                 const SizedBoxH20(),
                 CustomTextField(
-                  controller: TextEditingController(),
+                  controller: coinController.addressController,
                   hintText: 'Enter Recipient wallet address',
                 ),
               ],
@@ -52,9 +58,11 @@ class _SendCryptoAddressState extends State<SendCryptoAddress> {
               children: [
                 CustomButton(
                   onPressed: () {
-                    Get.toNamed(AppRoutes.sendCryptoPreview);
+                    if(coinController.addressController.text.isNotEmpty) {
+                      Get.toNamed(AppRoutes.sendCryptoPreview);
+                    }
                   },
-                  text: 'Send BTC',
+                  text: 'Send ${walletController.selectedWallet.value.currency}',
                 ),
                 const SizedBoxH15(),
               ],

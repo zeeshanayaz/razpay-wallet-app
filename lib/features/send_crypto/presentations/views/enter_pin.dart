@@ -6,8 +6,9 @@ import 'package:provider/provider.dart';
 import 'package:razpay/core/colors.dart';
 import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/style.dart';
-import 'package:razpay/router.dart';
 import 'package:razpay/theme.dart';
+
+import '../../controller/send_coin_controller.dart';
 
 class SendCryptoPin extends StatefulWidget {
   const SendCryptoPin({super.key});
@@ -17,7 +18,8 @@ class SendCryptoPin extends StatefulWidget {
 }
 
 class _SendCryptoPinState extends State<SendCryptoPin> {
-  final pinController = TextEditingController();
+  final coinController = Get.find<SendCoinController>();
+
   final focusNode = FocusNode();
   String pinInput = '';
 
@@ -46,7 +48,7 @@ class _SendCryptoPinState extends State<SendCryptoPin> {
               const SizedBoxH30(),
               const SizedBoxH30(),
               Pinput(
-                controller: pinController,
+                controller: coinController.pinController,
                 obscureText: true,
                 keyboardType: TextInputType.none,
                 keyboardAppearance: Brightness.light,
@@ -68,7 +70,7 @@ class _SendCryptoPinState extends State<SendCryptoPin> {
                 hapticFeedbackType: HapticFeedbackType.lightImpact,
                 length: 4,
                 onCompleted: (pin) {
-                  Get.toNamed(AppRoutes.sendCryptoSuccessful);
+                  coinController.sendCoin();
                 },
                 onChanged: (value) {
                   setState(() {
@@ -190,17 +192,17 @@ class _SendCryptoPinState extends State<SendCryptoPin> {
   }
 
   void _handleDelete() {
-    String currentText = pinController.text;
+    String currentText = coinController.pinController.text;
     if (currentText.isNotEmpty) {
       String updatedText = currentText.substring(0, currentText.length - 1);
-      pinController.text = updatedText;
+      coinController.pinController.text = updatedText;
     }
   }
 
   void _handleButtonPress(String button) {
-    String currentText = pinController.text;
+    String currentText = coinController.pinController.text;
     String updatedText = currentText + button;
-    pinController.text = updatedText;
+    coinController.pinController.text = updatedText;
   }
 
   final List<String> buttons = [

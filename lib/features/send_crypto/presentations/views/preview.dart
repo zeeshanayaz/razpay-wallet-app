@@ -10,6 +10,10 @@ import 'package:razpay/router.dart';
 import 'package:razpay/theme.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/constant.dart';
+import '../../../home/controller/wallet_controller.dart';
+import '../../controller/send_coin_controller.dart';
+
 class SendCryptoPreview extends StatefulWidget {
   const SendCryptoPreview({super.key});
 
@@ -18,6 +22,9 @@ class SendCryptoPreview extends StatefulWidget {
 }
 
 class _SendCryptoPreviewState extends State<SendCryptoPreview> {
+  final walletController = Get.find<WalletController>();
+  final coinController = Get.find<SendCoinController>();
+
   @override
   Widget build(BuildContext context) {
     bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
@@ -44,7 +51,7 @@ class _SendCryptoPreviewState extends State<SendCryptoPreview> {
                 ),
                 const SizedBoxH5(),
                 Text(
-                  '1FfmbHfnpaZjKFvyi1okTjJJusN455paPH',
+                  coinController.addressController.text,
                   style: textStyle14,
                 ),
                 const SizedBoxH25(),
@@ -176,7 +183,7 @@ class _SendCryptoPreviewState extends State<SendCryptoPreview> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: SvgPicture.asset(
-                'assets/icons/btc.svg',
+                accessCryptoIcon(walletController.selectedWallet.value.currency ?? ''),
                 width: 30,
                 height: 30,
               ),
@@ -186,13 +193,13 @@ class _SendCryptoPreviewState extends State<SendCryptoPreview> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Bitcoin',
+                  accessCryptoName(walletController.selectedWallet.value.currency ?? ''),
                   style: textStyle16.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  'BTC',
+                  walletController.selectedWallet.value.currency ?? '',
                   style: textStyle12,
                 ),
               ],
@@ -203,7 +210,7 @@ class _SendCryptoPreviewState extends State<SendCryptoPreview> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '\$567.89',
+              '\$${coinController.amountController.text}',
               style: textStyle16.copyWith(
                 fontWeight: FontWeight.bold,
               ),

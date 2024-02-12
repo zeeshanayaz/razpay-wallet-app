@@ -11,6 +11,7 @@ import 'package:razpay/core/style.dart';
 import 'package:razpay/theme.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/constant.dart';
 import '../../../../core/dialog.dart';
 import '../../../../core/helper.dart';
 import '../../controllers/transaction_controller.dart';
@@ -249,7 +250,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: SvgPicture.asset(
-                'assets/icons/btc.svg',
+                accessCryptoIcon(transactionController.transactionDetail.value.coinId ?? ''),
                 width: 30,
                 height: 30,
               ),
@@ -259,7 +260,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  transactionController.transactionDetail.value.coinId ?? '',
+                  accessCryptoName(transactionController.transactionDetail.value.coinId ?? ''),
                   style: textStyle16.copyWith(
                     fontWeight: FontWeight.bold,
                   ),

@@ -6,6 +6,7 @@ import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/style.dart';
 import 'package:razpay/core/utils/device.dart';
 
+import '../../../../core/constant.dart';
 import '../../../../core/dialog.dart';
 import '../../../../models/wallet/wallet.dart';
 import '../../controller/wallet_controller.dart';
@@ -121,17 +122,13 @@ class _ReceiveCryptoModalState extends State<ReceiveCryptoModal> {
         child: Row(
           children: [
             SvgPicture.asset(
-              (wallet.currency ?? '').toLowerCase() == 'btc'
-                  ? 'assets/icons/btc.svg'
-                  : (wallet.currency ?? '').toLowerCase() == 'eth'
-                      ? 'assets/icons/eth.svg'
-                      : 'assets/icons/binance.svg',
+              accessCryptoIcon(wallet.currency ?? ''),
               width: 20,
               height: 20,
             ),
             const SizedBoxW5(),
             Text(
-              wallet.currency ?? '',
+              accessCryptoName(wallet.currency ?? ''),
               style: textStyle12,
             ),
           ],

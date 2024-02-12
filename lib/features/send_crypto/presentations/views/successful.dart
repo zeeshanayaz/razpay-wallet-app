@@ -52,7 +52,7 @@ class SendCryptoSuccessful extends StatelessWidget {
                 CustomButton(
                   text: 'Done',
                   onPressed: () {
-                    Get.offAndToNamed(AppRoutes.mainHome);
+                    Get.offAllNamed(AppRoutes.mainHome);
                   },
                 ),
                 const SizedBoxH20(),

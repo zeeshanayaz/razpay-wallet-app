@@ -10,6 +10,12 @@ import 'package:razpay/router.dart';
 import 'package:razpay/theme.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/constant.dart';
+import '../../../../core/dialog.dart';
+import '../../../../models/wallet/wallet.dart';
+import '../../../home/controller/wallet_controller.dart';
+import '../../controller/send_coin_controller.dart';
+
 class SendCryptoAmountScreen extends StatefulWidget {
   const SendCryptoAmountScreen({super.key});
 
@@ -18,9 +24,17 @@ class SendCryptoAmountScreen extends StatefulWidget {
 }
 
 class _SendCryptoAmountScreenState extends State<SendCryptoAmountScreen> {
-  String selectedCoin = 'Bitcoin';
-  List<String> coins = ['Bitcoin', 'Ethereum', 'Tether'];
-  final amountController = TextEditingController();
+  final walletController = Get.put(WalletController());
+  final coinController = Get.put(SendCoinController());
+
+  @override
+  void dispose() {
+    Get.delete<WalletController>();
+    Get.delete<SendCoinController>();
+    super.dispose();
+  }
+
+
   String pinInput = '';
 
   @override
@@ -33,7 +47,9 @@ class _SendCryptoAmountScreenState extends State<SendCryptoAmountScreen> {
           'Send Crypto',
         ),
       ),
-      body: Column(
+      body: Obx(() => walletController.isLoading.isTrue
+        ? DialogHelper.loadingIndicator()
+        : Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(15.0),
@@ -47,19 +63,19 @@ class _SendCryptoAmountScreenState extends State<SendCryptoAmountScreen> {
                     boxShadow: isDark
                         ? []
                         : const [
-                            BoxShadow(
-                              offset: Offset(1, 5),
-                              color: grey,
-                              blurRadius: 20,
-                              spreadRadius: 0,
-                            ),
-                            BoxShadow(
-                              offset: Offset(5, 1),
-                              color: grey,
-                              blurRadius: 20,
-                              spreadRadius: 0,
-                            ),
-                          ],
+                      BoxShadow(
+                        offset: Offset(1, 5),
+                        color: grey,
+                        blurRadius: 20,
+                        spreadRadius: 0,
+                      ),
+                      BoxShadow(
+                        offset: Offset(5, 1),
+                        color: grey,
+                        blurRadius: 20,
+                        spreadRadius: 0,
+                      ),
+                    ],
                   ),
                   child: Column(
                     children: [
@@ -69,20 +85,20 @@ class _SendCryptoAmountScreenState extends State<SendCryptoAmountScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              for (var item in coins) coinWid(name: item),
+                              for (var item in walletController.wallet) coinWid(wallet: item),
                             ],
                           ),
                         ),
                       ),
                       const SizedBoxH20(),
                       Text(
-                        '0.003453 BTC Available',
+                        '${walletController.selectedWallet.value.balance} ${walletController.selectedWallet.value.currency} Available',
                         style: textStyle14,
                       ),
                       const SizedBoxH20(),
                       TextFormField(
                         textAlign: TextAlign.center,
-                        controller: amountController,
+                        controller: coinController.amountController,
                         keyboardType: TextInputType.none,
                         style: headerStyle.copyWith(fontSize: 40),
                         onChanged: (value) {
@@ -103,7 +119,9 @@ class _SendCryptoAmountScreenState extends State<SendCryptoAmountScreen> {
                       const SizedBoxH20(),
                       CustomButton(
                         onPressed: () {
-                          Get.toNamed(AppRoutes.sendCryptoAddress);
+                          if(coinController.amountController.text.isNotEmpty && double.parse(coinController.amountController.text) > 0) {
+                            Get.toNamed(AppRoutes.sendCryptoAddress);
+                          }
                         },
                         text: 'Continue',
                       )
@@ -132,7 +150,7 @@ class _SendCryptoAmountScreenState extends State<SendCryptoAmountScreen> {
               children: buttons.map((String button) {
                 return GestureDetector(
                   onTap: () async {
-                    if (button == 'del' && pinInput.isNotEmpty) {
+                    if (button == 'del') {
                       _handleDelete();
                     } else if (button == '*') {
                     } else {
@@ -150,46 +168,46 @@ class _SendCryptoAmountScreenState extends State<SendCryptoAmountScreen> {
                       boxShadow: isDark
                           ? []
                           : const [
-                              BoxShadow(
-                                offset: Offset(1, 5),
-                                color: grey,
-                                blurRadius: 20,
-                                spreadRadius: 0,
-                              ),
-                              BoxShadow(
-                                offset: Offset(5, 1),
-                                color: grey,
-                                blurRadius: 20,
-                                spreadRadius: 0,
-                              ),
-                            ],
+                        BoxShadow(
+                          offset: Offset(1, 5),
+                          color: grey,
+                          blurRadius: 20,
+                          spreadRadius: 0,
+                        ),
+                        BoxShadow(
+                          offset: Offset(5, 1),
+                          color: grey,
+                          blurRadius: 20,
+                          spreadRadius: 0,
+                        ),
+                      ],
                     ),
                     alignment: Alignment.center,
                     child: button == 'del'
                         ? const Icon(Icons.backspace_outlined)
                         : Text(
-                            button,
-                            style: textStyle18.copyWith(
-                              fontWeight: FontWeight.w900,
-                              fontStyle: FontStyle.italic,
-                              fontSize: 20,
-                            ),
-                          ),
+                      button,
+                      style: textStyle18.copyWith(
+                        fontWeight: FontWeight.w900,
+                        fontStyle: FontStyle.italic,
+                        fontSize: 20,
+                      ),
+                    ),
                   ),
                 );
               }).toList(),
             ),
           ),
         ],
-      ),
+      ),),
     );
   }
 
-  Widget coinWid({required String name}) {
+  Widget coinWid({required WalletAddress wallet}) {
     return GestureDetector(
       onTap: () {
         setState(() {
-          selectedCoin = name;
+          walletController.selectedWallet(wallet);
         });
       },
       child: Container(
@@ -197,22 +215,18 @@ class _SendCryptoAmountScreenState extends State<SendCryptoAmountScreen> {
         margin: const EdgeInsets.only(left: 15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          border: Border.all(color: name == selectedCoin ? primary : grey),
+          border: Border.all(color: wallet.id == walletController.selectedWallet.value.id ? primary : grey),
         ),
         child: Row(
           children: [
             SvgPicture.asset(
-              name == 'Bitcoin'
-                  ? 'assets/icons/btc.svg'
-                  : name == 'Ethereum'
-                      ? 'assets/icons/eth.svg'
-                      : 'assets/icons/binance.svg',
+              accessCryptoIcon(wallet.currency ?? ''),
               width: 20,
               height: 20,
             ),
             const SizedBoxW5(),
             Text(
-              name,
+              accessCryptoName(wallet.currency ?? ''),
               style: textStyle12,
             ),
           ],
@@ -222,17 +236,17 @@ class _SendCryptoAmountScreenState extends State<SendCryptoAmountScreen> {
   }
 
   void _handleDelete() {
-    String currentText = amountController.text;
+    String currentText = coinController.amountController.text;
     if (currentText.isNotEmpty) {
       String updatedText = currentText.substring(0, currentText.length - 1);
-      amountController.text = updatedText;
+      coinController.amountController.text = updatedText;
     }
   }
 
   void _handleButtonPress(String button) {
-    String currentText = amountController.text;
+    String currentText = coinController.amountController.text;
     String updatedText = currentText + button;
-    amountController.text = updatedText;
+    coinController.amountController.text = updatedText;
   }
 
   final List<String> buttons = [
