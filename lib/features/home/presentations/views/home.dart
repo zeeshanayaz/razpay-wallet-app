@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:razpay/core/colors.dart';
-import 'package:razpay/core/divider.dart';
 import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/style.dart';
 import 'package:razpay/core/utils/device.dart';
@@ -12,7 +11,9 @@ import 'package:razpay/router.dart';
 import 'package:razpay/theme.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/dialog.dart';
 import '../../controller/graph_controller.dart';
+import '../../controller/trending_controller.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,10 +24,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final graphController = Get.put(GraphController());
+  final trendingController = Get.put(TrendingController());
 
   @override
   void dispose() {
     Get.delete<GraphController>();
+    Get.delete<TrendingController>();
     super.dispose();
   }
 
@@ -68,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
+      body: Obx(() => SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(
@@ -82,12 +85,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: width(context),
               ),
               const SizedBoxH15(),
-              Text(
+              /* Text(
                 'My Portofolios',
                 style: textStyle16.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
-              ),
+              ),*/
               // SingleChildScrollView(
               //   scrollDirection: Axis.horizontal,
               //   padding: const EdgeInsets.symmetric(
@@ -116,16 +119,33 @@ class _HomeScreenState extends State<HomeScreen> {
               //     fontWeight: FontWeight.w500,
               //   ),
               // ),
-              const SizedBoxH15(),
-              const PortTile(
-                name: 'Bitcoin',
-                asset: 'BTC',
-                icon: 'btc',
-                value: '\$20,000',
-                goingUp: true,
-                increasePer: '2.6%',
-                color: '',
+              Text(
+                'Trending',
+                style: textStyle16.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
               ),
+              const SizedBoxH15(),
+              trendingController.isLoading.isTrue
+                  ? DialogHelper.loadingIndicator()
+                  : ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: trendingController.trending.length,
+                itemBuilder: (context, index) {
+                  return PortTile(
+                    trendingData: trendingController.trending[index],
+                    name: 'Bitcoin',
+                    asset: 'BTC',
+                    icon: 'btc',
+                    value: '\$20,000',
+                    goingUp: true,
+                    increasePer: '2.6%',
+                    color: '',
+                  );
+                },
+              ),
+              /*
               const SizedBoxH5(),
               LineDivider(
                 isDark: isDark,
@@ -181,12 +201,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 goingUp: true,
                 increasePer: '2.6%',
                 color: 'yellow',
-              ),
-              const SizedBoxH10(),
+              ),*/
             ],
           ),
         ),
-      ),
+      ),),
     );
   }
 }

@@ -13,8 +13,16 @@ const Map<String, dynamic> cryptoData = {
     'name': 'Bitcoin',
     'icon': 'assets/icons/btc.svg'
   },
+  'bitcoin': {
+    'name': 'Bitcoin',
+    'icon': 'assets/icons/btc.svg'
+  },
   'eth': {
-    'name': 'ETHEREUM',
+    'name': 'Ethereum',
+    'icon': 'assets/icons/eth.svg'
+  },
+  'ethereum': {
+    'name': 'Ethereum',
     'icon': 'assets/icons/eth.svg'
   },
   'usdt': {

@@ -18,5 +18,6 @@ class ApiRoutes {
   static String wallet = 'wallet';
   static String sendCoins = 'send-coins';
   static String graph = 'graph';
+  static String trending = 'trending';
 
 }
