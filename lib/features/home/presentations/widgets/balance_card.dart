@@ -12,13 +12,17 @@ import 'package:razpay/router.dart';
 import 'package:razpay/theme.dart';
 import 'package:provider/provider.dart';
 
+import '../../controller/graph_controller.dart';
+
 class BalanceCard extends StatelessWidget {
   const BalanceCard({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final graphController = Get.find<GraphController>();
+
     bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
-    return Stack(
+    return Obx(() => Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.center,
       children: [
@@ -46,7 +50,7 @@ class BalanceCard extends StatelessWidget {
                         style: textStyle14.copyWith(color: white),
                       ),
                       Text(
-                        '\$50,000',
+                        '\$${graphController.graph.value.total ?? 0.0}',
                         style: headerStyle.copyWith(color: white),
                       ),
                       // const SizedBoxH15(),
@@ -63,7 +67,7 @@ class BalanceCard extends StatelessWidget {
                               color: green,
                             ),
                             Text(
-                              '+2,5%',
+                              '${graphController.graph.value.status ?? 0.0}%',
                               style: textStyle12.copyWith(
                                 color: green,
                                 fontWeight: FontWeight.bold,
@@ -128,7 +132,7 @@ class BalanceCard extends StatelessWidget {
           ),
         ),
       ],
-    );
+    ),);
   }
 
   Widget actionButton({

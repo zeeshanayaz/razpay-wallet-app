@@ -17,5 +17,6 @@ class ApiRoutes {
   static String singleTransaction = 'single-transaction';
   static String wallet = 'wallet';
   static String sendCoins = 'send-coins';
+  static String graph = 'graph';
 
 }
