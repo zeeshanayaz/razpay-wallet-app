@@ -92,7 +92,7 @@ class _SendCryptoAmountScreenState extends State<SendCryptoAmountScreen> {
                       ),
                       const SizedBoxH20(),
                       Text(
-                        '${walletController.selectedWallet.value.balance} ${walletController.selectedWallet.value.currency} Available',
+                        '${walletController.selectedWallet.value.totalBalance} ${walletController.selectedWallet.value.currency} Available',
                         style: textStyle14,
                       ),
                       const SizedBoxH20(),

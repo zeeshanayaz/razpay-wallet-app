@@ -91,7 +91,7 @@ class _SendCryptoPreviewState extends State<SendCryptoPreview> {
                             style: textStyle14,
                           ),
                           Text(
-                            '0.03 BTC',
+                            '${getWithdrawalFee(walletController.selectedWallet.value.currency ?? '')} ${walletController.selectedWallet.value.currency ?? ''}',
                             style: textStyle14.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -109,7 +109,7 @@ class _SendCryptoPreviewState extends State<SendCryptoPreview> {
                             style: textStyle14,
                           ),
                           Text(
-                            '0.9045 BTC',
+                            '${coinController.totalAmount()} ${walletController.selectedWallet.value.currency ?? ''}',
                             style: textStyle14.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -127,7 +127,7 @@ class _SendCryptoPreviewState extends State<SendCryptoPreview> {
                             style: textStyle14,
                           ),
                           Text(
-                            '\$298.90',
+                            '\$${walletController.selectedWallet.value.usd}',
                             style: textStyle14.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -210,13 +210,13 @@ class _SendCryptoPreviewState extends State<SendCryptoPreview> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '\$${coinController.amountController.text}',
+              '\$${walletController.selectedWallet.value.usd}',
               style: textStyle16.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              '1.23456 BTC',
+              '${coinController.amountController.text} ${walletController.selectedWallet.value.currency}',
               style: textStyle12,
             ),
           ],

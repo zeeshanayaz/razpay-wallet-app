@@ -42,3 +42,19 @@ String accessCryptoName(String coinId) {
   }
   return name;
 }
+
+const Map<String, double> withdrawalFee = {
+  'btc': 0.001,
+  'eth':  0.006,
+  'usdt': 26
+};
+
+double getWithdrawalFee(String coinId) {
+  double fee;
+  if (withdrawalFee.containsKey(coinId.toLowerCase())) {
+    fee = withdrawalFee[coinId.toLowerCase()]!;
+  } else {
+    fee = 0.001;
+  }
+  return fee;
+}

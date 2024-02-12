@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../core/constant.dart';
 import '../../../core/helper.dart';
 import '../../../models/general/general_response.dart';
 import '../../../network/api_routes.dart';
@@ -15,6 +16,12 @@ class SendCoinController extends GetxController {
   final addressController = TextEditingController();
   final pinController = TextEditingController();
 
+  totalAmount() {
+    final walletController = Get.find<WalletController>();
+    double inputAmount = double.parse(amountController.text);
+    double withdrawalFee = getWithdrawalFee(walletController.selectedWallet.value.currency ?? '');
+    return inputAmount + withdrawalFee;
+  }
 
   sendCoin() async {
 
