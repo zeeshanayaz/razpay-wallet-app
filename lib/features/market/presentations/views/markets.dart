@@ -93,6 +93,7 @@ class _MarketScreenState extends State<MarketScreen> {
                 var marketData = marketController.market[index];
                 // Replace this with your list item widget
                 return TrendingTile(
+                  marketData: marketController.market[index],
                   name: marketData.currency ?? '',
                   asset: marketData.currency ?? '',
                   icon: marketData.icon ?? '',

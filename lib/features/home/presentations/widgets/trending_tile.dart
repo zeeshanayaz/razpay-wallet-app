@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:razpay/core/colors.dart';
@@ -6,18 +7,22 @@ import 'package:razpay/core/style.dart';
 
 import '../../../../core/divider.dart';
 import '../../../../core/helper.dart';
+import '../../../../models/market/market.dart';
 import '../../../../models/trending/trending.dart';
 import '../../../../theme.dart';
 
 class TrendingTile extends StatelessWidget {
+  final Market marketData;
   final String icon;
   final String name;
   final String asset;
   final String value;
   final String increasePer;
   final bool goingUp;
+
   const TrendingTile({
     super.key,
+    required this.marketData,
     required this.name,
     required this.asset,
     required this.icon,
@@ -66,11 +71,62 @@ class TrendingTile extends StatelessWidget {
             ),
             Row(
               children: [
-                Image.asset(
+                SizedBox(
+                  height: 30,
+                  width: 80,
+                  child: LineChart(
+                    LineChartData(
+                        lineBarsData: [
+                          LineChartBarData(
+                            spots: [
+                              FlSpot(0, double.parse(marketData.h1 ?? '0.0')),
+                              FlSpot(1, double.parse(marketData.h2 ?? '0.0')),
+                              FlSpot(2, double.parse(marketData.h3 ?? '0.0')),
+                              FlSpot(3, double.parse(marketData.h4 ?? '0.0')),
+                              FlSpot(4, double.parse(marketData.h5 ?? '0.0')),
+                              FlSpot(5, double.parse(marketData.h6 ?? '0.0')),
+                              FlSpot(6, double.parse(marketData.h7 ?? '0.0')),
+                              FlSpot(7, double.parse(marketData.h8 ?? '0.0')),
+                            ],
+                            isCurved: true,
+                            gradient: const LinearGradient(
+                              colors: [
+                                Colors.green,
+                                Colors.greenAccent,
+                              ],
+                            ),
+                            barWidth: 1,
+                            isStrokeCapRound: true,
+                            dotData: const FlDotData(
+                              show: false,
+                            ),
+                            belowBarData: BarAreaData(
+                              show: true,
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.green,
+                                  Colors.greenAccent,
+                                ].map((color) => color.withOpacity(0.3)).toList(),
+                              ),
+                            ),
+                          ),
+                        ],
+                        titlesData: const FlTitlesData(show: false),
+                        gridData: const FlGridData(
+                          show: false,
+                        ),
+                        borderData: FlBorderData(
+                          show: false,
+                        )),
+                    duration: const Duration(milliseconds: 150),
+                    curve: Curves.linear,
+                  ),
+                ),
+                /*Image.asset(
                   goingUp
                       ? 'assets/icons/green-wave.png'
                       : 'assets/icons/red-wave.png',
-                ),
+                ),*/
                 const SizedBoxW20(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,6 +167,7 @@ class PortTile extends StatelessWidget {
   final String increasePer;
   final bool goingUp;
   final String color;
+
   const PortTile({
     super.key,
     required this.trendingData,
@@ -158,13 +215,64 @@ class PortTile extends StatelessWidget {
             ),
             Row(
               children: [
-                Image.asset(
+                SizedBox(
+                  height: 30,
+                  width: 80,
+                  child: LineChart(
+                    LineChartData(
+                        lineBarsData: [
+                          LineChartBarData(
+                            spots: [
+                              FlSpot(0, double.parse(trendingData.h1 ?? '0.0')),
+                              FlSpot(1, double.parse(trendingData.h2 ?? '0.0')),
+                              FlSpot(2, double.parse(trendingData.h3 ?? '0.0')),
+                              FlSpot(3, double.parse(trendingData.h4 ?? '0.0')),
+                              FlSpot(4, double.parse(trendingData.h5 ?? '0.0')),
+                              FlSpot(5, double.parse(trendingData.h6 ?? '0.0')),
+                              FlSpot(6, double.parse(trendingData.h7 ?? '0.0')),
+                              FlSpot(7, double.parse(trendingData.h8 ?? '0.0')),
+                            ],
+                            isCurved: true,
+                            gradient: const LinearGradient(
+                              colors: [
+                                Colors.green,
+                                Colors.greenAccent,
+                              ],
+                            ),
+                            barWidth: 1,
+                            isStrokeCapRound: true,
+                            dotData: const FlDotData(
+                              show: false,
+                            ),
+                            belowBarData: BarAreaData(
+                              show: true,
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.green,
+                                  Colors.greenAccent,
+                                ].map((color) => color.withOpacity(0.3)).toList(),
+                              ),
+                            ),
+                          ),
+                        ],
+                        titlesData: const FlTitlesData(show: false),
+                        gridData: const FlGridData(
+                          show: false,
+                        ),
+                        borderData: FlBorderData(
+                          show: false,
+                        )),
+                    duration: const Duration(milliseconds: 150),
+                    curve: Curves.linear,
+                  ),
+                ),
+               /* Image.asset(
                   color == 'green'
                       ? 'assets/images/wave-green.png'
                       : color == 'yellow'
                           ? 'assets/images/wave-yellow.png'
                           : 'assets/images/wave-blue.png',
-                ),
+                ),*/
                 const SizedBoxW20(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,7 +284,8 @@ class PortTile extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      BaseHelper.formatStringToDecimal(trendingData.status ?? '0.0', 1),
+                      BaseHelper.formatStringToDecimal(
+                          trendingData.status ?? '0.0', 1),
                       style: textStyle12.copyWith(
                         color: goingUp ? green : red,
                       ),
