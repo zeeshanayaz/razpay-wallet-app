@@ -50,7 +50,7 @@ class SignUpController extends GetxController {
       return;
     }
 
-    BaseController.showLoading('Creating user...');
+    BaseController.showLoading();
     var response = await BaseClient().post(ApiRoutes.register, {
       'first_name': firstName.text,
       'last_name': lastName.text,

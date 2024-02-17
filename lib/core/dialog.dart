@@ -69,8 +69,10 @@ class DialogHelper {
             mainAxisSize: MainAxisSize.min,
             children: [
               const CircularProgressIndicator.adaptive(),
-              const SizedBoxH10(),
-              Text(message ?? 'Loading...'),
+              if(message != null) ...[
+                const SizedBoxH10(),
+                Text(message),
+              ]
             ],
           ),
         ),
