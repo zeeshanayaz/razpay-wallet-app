@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:razpay/core/button.dart';
 import 'package:razpay/core/utils/device.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
@@ -131,14 +130,14 @@ class _ConfirmPinScreenState extends State<ConfirmPinScreen> {
                   ),
                   const SizedBoxH40(),
                   // const SizedBoxH30(),
-                  CustomButton(
+                  /*CustomButton(
                     onPressed: () {
                       if(createPinController.pin.text.length == 4) {
                         createPinController.createPin();
                       }
                     },
                     text: 'Continue',
-                  ),
+                  ),*/
                 ],
               ),
             ),

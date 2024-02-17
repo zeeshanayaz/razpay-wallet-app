@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:razpay/core/button.dart';
+import '../../../../core/button.dart';
 import 'package:razpay/core/utils/device.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
@@ -141,14 +141,14 @@ class _CreatePinScreenState extends State<CreatePinScreen> {
                   ),
                   const SizedBoxH40(),
                   // const SizedBoxH30(),
-                  CustomButton(
+                  /*CustomButton(
                     onPressed: () {
                       if(createPinController.pin.text.length == 4) {
                         Get.toNamed(AppRoutes.confirmPin);
                       }
                     },
                     text: 'Continue',
-                  ),
+                  ),*/
                 ],
               ),
             ),
