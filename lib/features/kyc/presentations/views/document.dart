@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:razpay/core/button.dart';
@@ -5,6 +7,7 @@ import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/style.dart';
 
 import '../../controllers/kyc_controller.dart';
+
 // import 'package:razpay/theme.dart';
 // import 'package:provider/provider.dart';
 
@@ -44,16 +47,30 @@ class _KYCDocumentScreenState extends State<KYCDocumentScreen> {
             ),
             Center(
               child: InkWell(
-                customBorder: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                onTap: () {
-                  kycInformationController.pickImageFrontFromCamera();
-                },
-                child: Image.asset(
-                  'assets/images/doc-scan.png',
-                ),
-              ),
+                  customBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  onTap: () {
+                    kycInformationController.pickImageFrontFromCamera();
+                  },
+                  child: Obx(
+                    () => kycInformationController
+                            .imageFileFrontPath.value.isEmpty
+                        ? Image.asset(
+                            'assets/images/doc-scan.png',
+                          )
+                        : Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Image.file(
+                              File(kycInformationController
+                                  .imageFileFrontPath.value),
+                              width: double.infinity,
+                              height: 200,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                  )),
             ),
             Column(
               children: [

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:razpay/core/button.dart';
@@ -5,6 +7,7 @@ import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/style.dart';
 
 import '../../controllers/kyc_controller.dart';
+
 // import 'package:razpay/theme.dart';
 // import 'package:provider/provider.dart';
 
@@ -50,9 +53,20 @@ class _KYCDocumentBackScreenState extends State<KYCDocumentBackScreen> {
                 onTap: () {
                   kycInformationController.pickImageBackFromCamera();
                 },
-                child: Image.asset(
+                child: Obx(() => kycInformationController.imageFileBackPath.value.isEmpty
+                    ? Image.asset(
                   'assets/images/back-card.png',
-                ),
+                )
+                    : Padding(
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Image.file(
+                                        File(kycInformationController.imageFileBackPath.value),
+                                        width: double.infinity,
+                                        height: 200,
+                                        fit: BoxFit.cover,
+                                      ),
+                    ),)
               ),
             ),
             Column(

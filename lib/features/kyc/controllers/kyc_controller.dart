@@ -19,10 +19,16 @@ class KYCInformationController extends GetxController {
   TextEditingController country = TextEditingController();
   var documentType = ''.obs;
   XFile? imageFileFront;
+  var imageFileFrontPath = ''.obs;
   XFile? imageFileBack;
+  var imageFileBackPath = ''.obs;
 
   void navigateToKycChooseDoc() {
-    if(firstName.text.isEmpty || lastName.text.isEmpty || city.text.isEmpty || phoneNumber.text.isEmpty || country.text.isEmpty) {
+    if (firstName.text.isEmpty ||
+        lastName.text.isEmpty ||
+        city.text.isEmpty ||
+        phoneNumber.text.isEmpty ||
+        country.text.isEmpty) {
       return;
     } else {
       Get.toNamed(AppRoutes.kycChooseDoc);
@@ -35,7 +41,7 @@ class KYCInformationController extends GetxController {
   }
 
   void navigateToKycBackDoc() {
-    if(imageFileFront == null) {
+    if (imageFileFront == null) {
       BaseHelper.showSnackBar('Image is required.', color: red);
     } else {
       Get.toNamed(AppRoutes.kyDocBack);
@@ -44,36 +50,40 @@ class KYCInformationController extends GetxController {
 
   void pickImageFrontFromCamera() async {
     final ImagePicker picker = ImagePicker();
-    imageFileFront = await picker.pickImage(source: ImageSource.camera, imageQuality: 90);
+    imageFileFront =
+        await picker.pickImage(source: ImageSource.camera, imageQuality: 90);
+    imageFileFrontPath(imageFileFront!.path);
 
-    if(imageFileFront != null) {
+    if (imageFileFront != null) {
       if (kDebugMode) {
         print('You selected Front image : ${imageFileFront?.path}');
-      } else {
-        if (kDebugMode) {
-          print('You have not taken image');
-        }
+      }
+    } else {
+      if (kDebugMode) {
+        print('You have not taken image');
       }
     }
   }
 
   void pickImageBackFromCamera() async {
     final ImagePicker picker = ImagePicker();
-    imageFileBack = await picker.pickImage(source: ImageSource.camera, imageQuality: 90);
+    imageFileBack =
+        await picker.pickImage(source: ImageSource.camera, imageQuality: 90);
+    imageFileBackPath(imageFileBack!.path);
 
-    if(imageFileBack != null) {
+    if (imageFileBack != null) {
       if (kDebugMode) {
         print('You selected  Back image : ${imageFileBack?.path}');
-      } else {
-        if (kDebugMode) {
-          print('You have not taken image');
-        }
+      }
+    } else {
+      if (kDebugMode) {
+        print('You have not taken image');
       }
     }
   }
 
   void submitKycInformation() async {
-    if(imageFileBack == null) {
+    if (imageFileBack == null) {
       BaseHelper.showSnackBar('Image is required.', color: red);
       return;
     }
@@ -90,16 +100,16 @@ class KYCInformationController extends GetxController {
       'back': imageFileBack!.path,
     };
 
-    var response = await BaseClient().postFormUploadDoc(ApiRoutes.kyc, queryParameters)
+    var response = await BaseClient()
+        .postFormUploadDoc(ApiRoutes.kyc, queryParameters)
         .catchError(BaseController.handleError);
 
     if (response == null) return;
 
     BaseController.hideLoading();
-    if(kDebugMode) print(response);
+    if (kDebugMode) print(response);
     var kycResponse = generalResponseFromJson(response);
     BaseHelper.showSnackBar(kycResponse.success);
     Get.offAllNamed(AppRoutes.kycCompleted);
   }
-
 }
