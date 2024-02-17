@@ -32,13 +32,13 @@ class _SplashScreenState extends State<SplashScreen> {
       // }
     } else {
       String hasToken = await SharedPref.getString(kToken) ?? '';
-      bool hasLoggedUser = await SharedPref.getBool(kLoggedUser) ?? false;
+      // bool hasLoggedUser = await SharedPref.getBool(kLoggedUser) ?? false;
       if(hasToken.isNotEmpty) {
-        if(hasLoggedUser) {
-          Get.offAllNamed(AppRoutes.mainHome);
-        } else {
+        // if(hasLoggedUser) {
+        //   Get.offAllNamed(AppRoutes.mainHome);
+        // } else {
           Get.offAndToNamed(AppRoutes.passcode);
-        }
+        // }
       } else {
         Get.offAndToNamed(AppRoutes.login);
       }

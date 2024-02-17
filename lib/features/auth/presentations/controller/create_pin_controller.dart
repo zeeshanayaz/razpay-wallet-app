@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/colors.dart';
-import '../../../../core/constant.dart';
 import '../../../../core/helper.dart';
-import '../../../../core/utils/shared_pref.dart';
 import '../../../../models/general/general_response.dart';
 import '../../../../network/api_routes.dart';
 import '../../../../network/base_client.dart';
@@ -34,7 +32,7 @@ class CreatePinController extends GetxController {
     if(kDebugMode) print(response);
 
     var createPinResponse = generalResponseFromJson(response);
-    await SharedPref.setBool(kLoggedUser, true);
+    // await SharedPref.setBool(kLoggedUser, true);
     BaseHelper.showSnackBar(createPinResponse.message);
     Get.offAllNamed(AppRoutes.kycInfo);
   }
