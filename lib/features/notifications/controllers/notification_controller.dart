@@ -8,6 +8,7 @@ import '../../../network/base_controller.dart';
 
 class NotificationController extends GetxController {
   var isLoading = false.obs;
+  var badgeCount = 0.obs;
   var notification = <Notification>[].obs;
 
   @override
@@ -16,7 +17,7 @@ class NotificationController extends GetxController {
     super.onInit();
   }
 
-  retrieveNotifications() async {
+  retrieveNotifications([bool? readNotification]) async {
     isLoading(true);
     var response = await BaseClient().get(ApiRoutes.notifications)
         .catchError(BaseController.handleError);
@@ -26,7 +27,8 @@ class NotificationController extends GetxController {
     if(kDebugMode) print(response);
 
     notification(notificationResponseFromJson(response).notifications);
-    seenNotification();
+    badgeCount(notificationResponseFromJson(response).unseen);
+    if(readNotification ?? false) seenNotification();
   }
 
   seenNotification() async {
@@ -35,6 +37,8 @@ class NotificationController extends GetxController {
 
     if (response == null) return;
     if(kDebugMode) print(response);
+
+    badgeCount(0);
 
     // var seenResponse = generalResponseFromJson(response);
     // BaseHelper.showSnackBar(seenResponse.message);

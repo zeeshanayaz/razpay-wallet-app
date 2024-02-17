@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:iconsax/iconsax.dart';
 import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/style.dart';
@@ -9,6 +10,7 @@ import 'package:razpay/router.dart';
 
 import '../../../../core/dialog.dart';
 import '../../../../core/helper.dart';
+import '../../../notifications/controllers/notification_controller.dart';
 import '../../controllers/market_controller.dart';
 
 class MarketScreen extends StatefulWidget {
@@ -20,6 +22,7 @@ class MarketScreen extends StatefulWidget {
 
 class _MarketScreenState extends State<MarketScreen> {
   final marketController = Get.put(MarketController());
+  final notificationController = Get.find<NotificationController>();
 
   @override
   void dispose() {
@@ -42,8 +45,11 @@ class _MarketScreenState extends State<MarketScreen> {
             onTap: () {
               Get.toNamed(AppRoutes.notifications);
             },
-            child: const Icon(
-              Iconsax.notification,
+            child: badges.Badge(
+              badgeContent: Obx(() => Text('${notificationController.badgeCount.value}'),),
+              child: const Icon(
+                Iconsax.notification,
+              ),
             ),
           ),
           const SizedBoxW15(),

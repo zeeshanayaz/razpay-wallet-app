@@ -12,6 +12,7 @@ import 'package:razpay/features/transactions/presentations/views/transactions.da
 import 'package:razpay/theme.dart';
 import 'package:provider/provider.dart';
 
+import '../../../notifications/controllers/notification_controller.dart';
 import '../../../profile/controller/profile_controller.dart';
 
 class MainHomeNav extends StatefulWidget {
@@ -23,6 +24,7 @@ class MainHomeNav extends StatefulWidget {
 
 class _MainHomeNavState extends State<MainHomeNav> {
   final profileController = Get.put(ProfileController());
+  final notificationController = Get.put(NotificationController());
 
   int _selectedIndex = 0;
 

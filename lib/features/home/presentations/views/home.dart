@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:iconsax/iconsax.dart';
 import 'package:razpay/core/colors.dart';
 import 'package:razpay/core/size_boxes.dart';
@@ -12,6 +13,7 @@ import 'package:razpay/theme.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/dialog.dart';
+import '../../../notifications/controllers/notification_controller.dart';
 import '../../controller/graph_controller.dart';
 import '../../controller/trending_controller.dart';
 
@@ -25,11 +27,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final graphController = Get.put(GraphController());
   final trendingController = Get.put(TrendingController());
+  final notificationController = Get.find<NotificationController>();
 
   @override
   void dispose() {
     Get.delete<GraphController>();
     Get.delete<TrendingController>();
+    // Get.delete<NotificationController>();
     super.dispose();
   }
 
@@ -62,8 +66,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () {
                     Get.toNamed(AppRoutes.notifications);
                   },
-                  child: const Icon(
-                    Iconsax.notification,
+                  child: badges.Badge(
+                    badgeContent: Obx(() => Text('${notificationController.badgeCount.value}'),),
+                    child: const Icon(
+                      Iconsax.notification,
+                    ),
                   ),
                 ),
               ],

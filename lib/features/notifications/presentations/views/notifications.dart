@@ -16,12 +16,13 @@ class NotificationScreens extends StatefulWidget {
 }
 
 class _NotificationScreensState extends State<NotificationScreens> {
-  final notificationController = Get.put(NotificationController());
+  final notificationController = Get.find<NotificationController>();
 
   @override
-  void dispose() {
-    Get.delete<NotificationController>();
-    super.dispose();
+  void initState() {
+    // if(notificationController.badgeCount.value > 0) notificationController.seenNotification();
+    notificationController.retrieveNotifications(true);
+    super.initState();
   }
 
   @override
