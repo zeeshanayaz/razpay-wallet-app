@@ -117,20 +117,12 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                     style: textStyle14,
                                   ),
                                   Text(
-                                    (transactionController.transactionDetail
-                                                    .value.confirmations ??
-                                                0) ==
-                                            1
+                                    (transactionController.transactionDetail.value.category ?? '').toLowerCase() == 'receive'
                                         ? 'Confirmed'
                                         : 'Sent',
                                     style: textStyle14.copyWith(
                                       fontWeight: FontWeight.bold,
-                                      color: (transactionController
-                                                      .transactionDetail
-                                                      .value
-                                                      .confirmations ??
-                                                  0) ==
-                                              1
+                                      color: (transactionController.transactionDetail.value.category ?? '').toLowerCase() == 'receive'
                                           ? green
                                           : red,
                                     ),
@@ -203,10 +195,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                           child: Container(
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: (transactionController.transactionDetail
-                                              .value.confirmations ??
-                                          0) ==
-                                      1
+                              color: (transactionController.transactionDetail.value.category ?? '').toLowerCase() == 'receive'
                                   ? green
                                   : red,
                               shape: BoxShape.circle,

@@ -72,11 +72,11 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     asset: transactionData.coinId ?? '',
                     val: '${transactionData.amount ?? 0.0}',
                     isDark: isDark,
-                    status: (transactionData.confirmations ?? 0) == 1
+                    status: (transactionData.category ?? '').toLowerCase() == 'receive'
                         ? 'Confirmed'
                         : 'Sent',
                     date: BaseHelper.formatDate(
-                        transactionData.createdAt ?? '', 'd MMMM, y h:mma'),
+                        transactionData.createdAt ?? '', 'd MMMM, y'),
                   );
                 },
               ),
