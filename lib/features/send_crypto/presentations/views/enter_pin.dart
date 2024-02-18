@@ -156,7 +156,7 @@ class _SendCryptoPinState extends State<SendCryptoPin> {
               runSpacing: 20,
               spacing: 10,
               children: buttons.map((String button) {
-                return GestureDetector(
+                return InkWell(
                   onTap: () async {
                     if (button == 'del' && pinInput.isNotEmpty) {
                       _handleDelete();

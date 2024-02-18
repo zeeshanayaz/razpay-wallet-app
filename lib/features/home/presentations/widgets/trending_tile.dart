@@ -92,10 +92,10 @@ class TrendingTile extends StatelessWidget {
                               FlSpot(7, double.parse(marketData.h8 ?? '0.0')),
                             ],
                             isCurved: true,
-                            gradient: const LinearGradient(
+                            gradient: LinearGradient(
                               colors: [
-                                Colors.green,
-                                Colors.greenAccent,
+                                goingUp ? Colors.green : Colors.red,
+                                goingUp ? Colors.greenAccent : Colors.redAccent,
                               ],
                             ),
                             barWidth: 1,
@@ -107,8 +107,9 @@ class TrendingTile extends StatelessWidget {
                               show: true,
                               gradient: LinearGradient(
                                 colors: [
-                                  Colors.green,
-                                  Colors.greenAccent,
+                                  goingUp ? Colors.green : Colors.red,
+                                  goingUp ? Colors.greenAccent : Colors.redAccent,
+
                                 ].map((color) => color.withOpacity(0.3)).toList(),
                               ),
                             ),
