@@ -14,6 +14,8 @@ class CreatePinController extends GetxController {
   TextEditingController pin = TextEditingController();
   TextEditingController confirmPin = TextEditingController();
 
+  var type = '';
+
   createPin() async {
 
     if(pin.text != confirmPin.text) {
@@ -34,6 +36,10 @@ class CreatePinController extends GetxController {
     var createPinResponse = generalResponseFromJson(response);
     // await SharedPref.setBool(kLoggedUser, true);
     BaseHelper.showSnackBar(createPinResponse.message);
-    Get.offAllNamed(AppRoutes.kycInfo);
+    if(type == 'update') {
+      Get.offNamedUntil(AppRoutes.mainHome, (route) => false);
+    } else {
+      Get.offAllNamed(AppRoutes.kycInfo);
+    }
   }
 }

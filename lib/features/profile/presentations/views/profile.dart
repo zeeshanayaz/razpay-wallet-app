@@ -134,11 +134,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
               LineDivider(
                 isDark: isDark,
               ),
-              ProfileLinkTile(
-                iconData: IconlyBold.password,
-                text: 'Change pin',
-                icon: true,
-                iswitchValue: false,
+              InkWell(
+                onTap: () {
+                  Get.toNamed(
+                    AppRoutes.createPin,
+                    arguments: {
+                      'type': 'update',
+                    },);
+                },
+                child: ProfileLinkTile(
+                  iconData: IconlyBold.password,
+                  text: 'Change pin',
+                  icon: true,
+                  iswitchValue: false,
+                ),
               ),
               LineDivider(
                 isDark: isDark,

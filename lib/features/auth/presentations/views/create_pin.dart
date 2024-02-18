@@ -23,6 +23,13 @@ class _CreatePinScreenState extends State<CreatePinScreen> {
   String pinInput = '';
 
   @override
+  void initState() {
+    final Map<String, dynamic> args = Get.arguments;
+    createPinController.type = args['type'];
+    super.initState();
+  }
+
+  @override
   void dispose() {
     Get.delete<CreatePinController>();
     super.dispose();
