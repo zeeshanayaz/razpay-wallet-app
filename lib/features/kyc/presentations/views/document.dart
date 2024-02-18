@@ -46,31 +46,41 @@ class _KYCDocumentScreenState extends State<KYCDocumentScreen> {
               ],
             ),
             Center(
-              child: InkWell(
-                  customBorder: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+              child: Column(
+                children: [
+                  Text(
+                    'Click on the image below to snap the front of you ${kycInformationController.documentType}',
+                    style: textStyle14,
+                    textAlign: TextAlign.center,
                   ),
-                  onTap: () {
-                    kycInformationController.pickImageFrontFromCamera();
-                  },
-                  child: Obx(
-                    () => kycInformationController
-                            .imageFileFrontPath.value.isEmpty
-                        ? Image.asset(
-                            'assets/images/doc-scan.png',
-                          )
-                        : Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Image.file(
-                              File(kycInformationController
-                                  .imageFileFrontPath.value),
-                              width: double.infinity,
-                              height: 200,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                  )),
+                  const SizedBoxH20(),
+                  InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      onTap: () {
+                        kycInformationController.pickImageFrontFromCamera();
+                      },
+                      child: Obx(
+                        () => kycInformationController
+                                .imageFileFrontPath.value.isEmpty
+                            ? Image.asset(
+                                'assets/images/doc-scan.png',
+                              )
+                            : Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 16.0),
+                                child: Image.file(
+                                  File(kycInformationController
+                                      .imageFileFrontPath.value),
+                                  width: double.infinity,
+                                  height: 200,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                      )),
+                ],
+              ),
             ),
             Column(
               children: [

@@ -141,7 +141,7 @@ class BalanceCard extends StatelessWidget {
     required Function() onPress,
     required bool isDark,
   }) {
-    return GestureDetector(
+    return InkWell(
       onTap: onPress,
       child: Container(
         padding: const EdgeInsets.all(10),

@@ -46,27 +46,37 @@ class _KYCDocumentBackScreenState extends State<KYCDocumentBackScreen> {
               ],
             ),
             Center(
-              child: InkWell(
-                customBorder: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                onTap: () {
-                  kycInformationController.pickImageBackFromCamera();
-                },
-                child: Obx(() => kycInformationController.imageFileBackPath.value.isEmpty
-                    ? Image.asset(
-                  'assets/images/back-card.png',
-                )
-                    : Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Image.file(
-                                        File(kycInformationController.imageFileBackPath.value),
-                                        width: double.infinity,
-                                        height: 200,
-                                        fit: BoxFit.cover,
-                                      ),
-                    ),)
+              child: Column(
+                children: [
+                  Text(
+                    'Click on the image below to snap the back of your ${kycInformationController.documentType}',
+                    style: textStyle14,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBoxH20(),
+                  InkWell(
+                    customBorder: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    onTap: () {
+                      kycInformationController.pickImageBackFromCamera();
+                    },
+                    child: Obx(() => kycInformationController.imageFileBackPath.value.isEmpty
+                        ? Image.asset(
+                      'assets/images/back-card.png',
+                    )
+                        : Padding(
+                      padding:
+                      const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Image.file(
+                                            File(kycInformationController.imageFileBackPath.value),
+                                            width: double.infinity,
+                                            height: 200,
+                                            fit: BoxFit.cover,
+                                          ),
+                        ),)
+                  ),
+                ],
               ),
             ),
             Column(
