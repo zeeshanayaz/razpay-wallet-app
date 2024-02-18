@@ -73,8 +73,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     val: '${transactionData.amount ?? 0.0}',
                     isDark: isDark,
                     status: (transactionData.category ?? '').toLowerCase() == 'receive'
-                        ? 'Confirmed'
-                        : 'Sent',
+                        ? 'Receive'
+                        : 'Confirmed',
                     date: BaseHelper.formatDate(
                         transactionData.createdAt ?? '', 'd MMMM, y'),
                   );

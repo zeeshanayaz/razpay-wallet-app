@@ -1,14 +1,15 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:razpay/core/colors.dart';
 import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/style.dart';
 
+import '../../../../core/constant.dart';
 import '../../../../core/divider.dart';
-import '../../../../core/helper.dart';
 import '../../../../models/market/market.dart';
-import '../../../../models/trending/trending.dart';
+import '../../../../models/wallet/wallet.dart';
 import '../../../../theme.dart';
 
 class TrendingTile extends StatelessWidget {
@@ -159,7 +160,7 @@ class TrendingTile extends StatelessWidget {
 }
 
 class PortTile extends StatelessWidget {
-  final Trending trendingData;
+  final WalletAddress trendingData;
   final String icon;
   final String name;
   final String asset;
@@ -190,17 +191,17 @@ class PortTile extends StatelessWidget {
           children: [
             Row(
               children: [
-                CircleAvatar(
-                  radius: 20.0,
-                  backgroundImage: NetworkImage(trendingData.icon ?? ''),
-                  backgroundColor: Colors.transparent,
+                SvgPicture.asset(
+                  accessCryptoIcon(trendingData.currency ?? ''),
+                  width: 20,
+                  height: 20,
                 ),
                 const SizedBoxW10(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      trendingData.currency ?? '',
+                      accessCryptoName(trendingData.currency ?? ''),
                       style: textStyle14.copyWith(
                         fontWeight: FontWeight.w500,
                       ),
@@ -215,7 +216,7 @@ class PortTile extends StatelessWidget {
             ),
             Row(
               children: [
-                SizedBox(
+                /*SizedBox(
                   height: 30,
                   width: 80,
                   child: LineChart(
@@ -265,7 +266,7 @@ class PortTile extends StatelessWidget {
                     duration: const Duration(milliseconds: 150),
                     curve: Curves.linear,
                   ),
-                ),
+                ),*/
                /* Image.asset(
                   color == 'green'
                       ? 'assets/images/wave-green.png'
@@ -278,18 +279,18 @@ class PortTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '\$${BaseHelper.formatStringToDecimal(trendingData.usdValue ?? '0.0', 1)}',
+                      '\$${trendingData.totalBalance ?? 0.0}',
                       style: textStyle14.copyWith(
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    Text(
+                    /*Text(
                       BaseHelper.formatStringToDecimal(
                           trendingData.status ?? '0.0', 1),
                       style: textStyle12.copyWith(
                         color: goingUp ? green : red,
                       ),
-                    ),
+                    ),*/
                   ],
                 ),
               ],

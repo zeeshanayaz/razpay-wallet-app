@@ -46,7 +46,7 @@ class TransactionTile extends StatelessWidget {
           children: [
             Row(
               children: [
-                status == 'Confirmed'
+                status == 'Receive'
                     ? Container(
                         padding: const EdgeInsets.all(10),
                         decoration: const BoxDecoration(
@@ -100,7 +100,7 @@ class TransactionTile extends StatelessWidget {
                   status,
                   style: textStyle12.copyWith(
                     fontWeight: FontWeight.w700,
-                    color: status == 'Confirmed' ? green : red,
+                    color: status == 'Receive' ? green : red,
                   ),
                 ),
               ],

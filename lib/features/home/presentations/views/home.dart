@@ -127,21 +127,21 @@ class _HomeScreenState extends State<HomeScreen> {
               //   ),
               // ),
               Text(
-                'Trending',
+                'My Portofolios',
                 style: textStyle16.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
               ),
               const SizedBoxH15(),
-              trendingController.isLoading.isTrue
+              graphController.isLoadingWallet.isTrue
                   ? DialogHelper.loadingIndicator()
                   : ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: trendingController.trending.length,
+                itemCount: graphController.wallet.length,
                 itemBuilder: (context, index) {
                   return PortTile(
-                    trendingData: trendingController.trending[index],
+                    trendingData: graphController.wallet[index],
                     name: 'Bitcoin',
                     asset: 'BTC',
                     icon: 'btc',

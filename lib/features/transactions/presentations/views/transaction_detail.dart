@@ -87,26 +87,30 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                 isDark: isDark,
                               ),
                               const SizedBoxH10(),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Withdrawal Fee',
-                                    style: textStyle14,
-                                  ),
-                                  Text(
-                                    '${transactionController.transactionDetail.value.fees} ${transactionController.transactionDetail.value.coinId}',
-                                    style: textStyle14.copyWith(
-                                      fontWeight: FontWeight.bold,
+                              if((transactionController.transactionDetail.value.category ?? '').toLowerCase() == 'receive') ...[
+
+                              ] else ...[
+                                Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Withdrawal Fee',
+                                      style: textStyle14,
                                     ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBoxH10(),
-                              LineDivider(
-                                isDark: isDark,
-                              ),
+                                    Text(
+                                      '${transactionController.transactionDetail.value.fees} ${transactionController.transactionDetail.value.coinId}',
+                                      style: textStyle14.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBoxH10(),
+                                LineDivider(
+                                  isDark: isDark,
+                                ),
+                              ],
                               const SizedBoxH10(),
                               Row(
                                 mainAxisAlignment:
@@ -118,8 +122,8 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                   ),
                                   Text(
                                     (transactionController.transactionDetail.value.category ?? '').toLowerCase() == 'receive'
-                                        ? 'Confirmed'
-                                        : 'Sent',
+                                        ? 'Receive'
+                                        : 'Confirmed',
                                     style: textStyle14.copyWith(
                                       fontWeight: FontWeight.bold,
                                       color: (transactionController.transactionDetail.value.category ?? '').toLowerCase() == 'receive'
