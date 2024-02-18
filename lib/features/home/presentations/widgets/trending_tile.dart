@@ -42,33 +42,35 @@ class TrendingTile extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 20.0,
-                  backgroundImage: NetworkImage(icon),
-                  backgroundColor: Colors.transparent,
-                ),
-                /*SvgPicture.asset(
-                  'assets/icons/$icon.svg',
-                ),*/
-                const SizedBoxW10(),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: textStyle14.copyWith(
-                        fontWeight: FontWeight.w500,
+            Expanded(
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 20.0,
+                    backgroundImage: NetworkImage(icon),
+                    backgroundColor: Colors.transparent,
+                  ),
+                  /*SvgPicture.asset(
+                    'assets/icons/$icon.svg',
+                  ),*/
+                  const SizedBoxW10(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: textStyle14.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                    Text(
-                      asset.toUpperCase(),
-                      style: textStyle12,
-                    ),
-                  ],
-                ),
-              ],
+                      Text(
+                        asset.toUpperCase(),
+                        style: textStyle12,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
             Row(
               children: [
@@ -129,22 +131,25 @@ class TrendingTile extends StatelessWidget {
                       : 'assets/icons/red-wave.png',
                 ),*/
                 const SizedBoxW20(),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      value,
-                      style: textStyle14.copyWith(
-                        fontWeight: FontWeight.w500,
+                SizedBox(
+                  width: 60,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        value,
+                        style: textStyle14.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                    Text(
-                      increasePer,
-                      style: textStyle12.copyWith(
-                        color: goingUp ? green : red,
+                      Text(
+                        increasePer,
+                        style: textStyle12.copyWith(
+                          color: goingUp ? green : red,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),

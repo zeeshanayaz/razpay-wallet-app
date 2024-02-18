@@ -80,6 +80,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       minLines: widget.minLine,
       validator: widget.validator,
       textInputAction: widget.action,
+      readOnly: widget.readOnly ?? false,
       style: textStyle14,
       // obscureText: widget.obsecure! ? true : false,
       decoration: InputDecoration(

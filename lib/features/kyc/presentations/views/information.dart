@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:razpay/core/button.dart';
@@ -5,6 +6,7 @@ import 'package:razpay/core/size_boxes.dart';
 import 'package:razpay/core/style.dart';
 import 'package:razpay/core/text_field.dart';
 
+import '../../../../core/constant.dart';
 import '../../controllers/kyc_controller.dart';
 // import 'package:razpay/theme.dart';
 // import 'package:provider/provider.dart';
@@ -75,8 +77,46 @@ class _KYCPersonalInformationState extends State<KYCPersonalInformation> {
                     CustomTextField(
                       controller: kycInformationController.country,
                       hintText: 'Country',
-                      suffixIcon: const Icon(
-                        Icons.keyboard_arrow_down,
+                      readOnly: true,
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          showCupertinoModalPopup<void>(
+                            context: context,
+                            builder: (BuildContext context) => CupertinoActionSheet(
+                              title: Text(
+                                'Country',
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                              actions: countryList
+                                  .map((item) => CupertinoActionSheetAction(
+                                child: Text(
+                                  item,
+                                  style:
+                                  Theme.of(context).textTheme.bodySmall,
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  kycInformationController.country.text = item;
+                                  // setState(() {});
+                                },
+                              ))
+                                  .toList(),
+                              cancelButton: CupertinoActionSheetAction(
+                                isDefaultAction: true,
+                                onPressed: () {
+                                  Navigator.pop(context, 'Cancel');
+                                },
+                                child: Text(
+                                  'Cancel',
+                                  style: Theme.of(context).textTheme.labelMedium,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down,
+                        ),
                       ),
                       textCapitalization: TextCapitalization.words,
                     ),
