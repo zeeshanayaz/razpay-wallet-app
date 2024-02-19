@@ -28,7 +28,7 @@ class BalanceCard extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.all(25),
-          height: height(context) * .2,
+          height: height(context) * .22,
           decoration: BoxDecoration(
             color: primary,
             borderRadius: BorderRadius.circular(15),
