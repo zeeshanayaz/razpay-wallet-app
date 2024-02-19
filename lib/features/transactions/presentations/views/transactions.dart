@@ -63,10 +63,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
         () => transactionController.isLoading.isTrue
             ? DialogHelper.loadingIndicator()
             : ListView.builder(
-                itemCount: transactionController.transaction.length,
+                itemCount: transactionController.filteredTransactions.length,
                 itemBuilder: (context, index) {
                   var transactionData =
-                      transactionController.transaction[index];
+                      transactionController.filteredTransactions[index];
                   return TransactionTile(
                     id: transactionData.id!,
                     asset: transactionData.coinId ?? '',

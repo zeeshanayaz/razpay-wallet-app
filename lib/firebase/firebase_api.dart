@@ -8,7 +8,7 @@ import '../core/constant.dart';
 import '../core/utils/shared_pref.dart';
 
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
-  if (true) {
+  if (kDebugMode) {
     print('Title: ${message.notification?.title}');
     print('Body: ${message.notification?.body}');
     print('Payload: ${message.data}');
@@ -96,7 +96,7 @@ class FirebaseApi {
   Future<void> initNotifications() async {
     await _firebaseMessaging.requestPermission();
     final fcmToken = await _firebaseMessaging.getToken();
-    if (true) {
+    if (kDebugMode) {
       print('FCM Token: $fcmToken');
     }
     await SharedPref.setString(fcm, fcmToken ?? '');
@@ -105,7 +105,7 @@ class FirebaseApi {
     initLocalNotifications();
 
     _firebaseMessaging.onTokenRefresh.listen((fcmNewToken) async {
-      if (true) {
+      if (kDebugMode) {
         print('FCM New Token:  $fcmNewToken');
       }
       await SharedPref.setString(fcm, fcmNewToken);
