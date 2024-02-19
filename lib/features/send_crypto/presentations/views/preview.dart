@@ -127,7 +127,7 @@ class _SendCryptoPreviewState extends State<SendCryptoPreview> {
                             style: textStyle14,
                           ),
                           Text(
-                            '\$${walletController.selectedWallet.value.usd}',
+                            '\$${coinController.getTotalUsdAmount(walletController.selectedWallet.value.usd ?? 0.0)}',
                             style: textStyle14.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -210,7 +210,7 @@ class _SendCryptoPreviewState extends State<SendCryptoPreview> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '\$${walletController.selectedWallet.value.usd}',
+              '\$${coinController.getUsdAmount(walletController.selectedWallet.value.usd ?? 0.0)}',
               style: textStyle16.copyWith(
                 fontWeight: FontWeight.bold,
               ),
