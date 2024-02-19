@@ -113,9 +113,16 @@ class BaseClient {
         SharedPref.logout();
         return;
       case 403:
-      case 406:
         var message = ErrorParserHelper.errorParser(utf8.decode(response.bodyBytes));
         throw UnAuthorizedException(message, response.request!.url.toString());
+      case 406:
+        if(response.request!.url.toString().contains('send-coins')) {
+          var responseJson = utf8.decode(response.bodyBytes);
+          return responseJson;
+        } else {
+          var message = ErrorParserHelper.errorParser(utf8.decode(response.bodyBytes));
+          throw UnAuthorizedException(message, response.request!.url.toString());
+        }
       case 422:
         throw BadRequestException(utf8.decode(response.bodyBytes), response.request!.url.toString());
       case 500:

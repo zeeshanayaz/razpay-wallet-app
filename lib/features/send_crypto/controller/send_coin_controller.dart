@@ -59,10 +59,20 @@ class SendCoinController extends GetxController {
 
     var sendCoinResponse = generalResponseFromJson(response);
     BaseHelper.showSnackBar(sendCoinResponse.message);
-    if(sendCoinResponse.status == 'success') {
+    Get.offAllNamed(
+      AppRoutes.sendCryptoSuccessful,
+        arguments: {
+          'amount': '${amountController.text} ${walletController.selectedWallet.value.currency}',
+          'status': sendCoinResponse.success ?? sendCoinResponse.status,
+          'message': sendCoinResponse.message,
+        }
+    );
+
+
+   /* if(sendCoinResponse.status == 'success') {
       Get.offAllNamed(AppRoutes.sendCryptoSuccessful);
     } else {
       // Get.offAllNamed(AppRoutes.sendCryptoFailed);
-    }
+    }*/
   }
 }
