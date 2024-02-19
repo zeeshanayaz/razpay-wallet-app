@@ -7,6 +7,7 @@ const kTransPinSet = 'tran_pin_setted';
 const kLocalAuthSetted = 'local_auth_setted';
 const kLoggedUser = 'logged_user';    //Assuming if user logged with Pin as well
 const kCurrentUser = 'current_user';
+const fcm = 'fcm_token';
 
 const Map<String, dynamic> cryptoData = {
   'btc': {

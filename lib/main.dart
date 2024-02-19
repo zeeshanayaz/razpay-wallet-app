@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -5,7 +6,15 @@ import 'package:razpay/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:razpay/router.dart';
 
-void main() {
+import 'firebase/firebase_api.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  ///Init firebase api class for all the notifications related logics
+  await FirebaseApi().initNotifications();
+
   runApp(const MyApp());
 }
 
