@@ -18,11 +18,11 @@ class BaseHelper {
     FocusScope.of(context).unfocus();
   }
 
-  static launchBrowser(url) async {
+  static launchBrowser(String url) async {
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
     } else {
-      throw 'Could not launch $url';
+      throw "Could not launch $url";
     }
   }
 

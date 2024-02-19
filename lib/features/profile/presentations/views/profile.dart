@@ -15,6 +15,7 @@ import 'package:razpay/router.dart';
 import 'package:razpay/theme.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/helper.dart';
 import '../../controller/profile_controller.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -152,26 +153,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
               LineDivider(
                 isDark: isDark,
               ),
-              ProfileLinkTile(
-                iconData: IconlyBold.info_square,
-                text: 'Help and support',
-                icon: true,
+              InkWell(
+                onTap: () async {
+                  BaseHelper.launchBrowser('https://razpaywallet.com/contact/');
+                },
+                child: ProfileLinkTile(
+                  iconData: IconlyBold.info_square,
+                  text: 'Help and support',
+                  icon: true,
+                ),
               ),
               LineDivider(
                 isDark: isDark,
               ),
-              ProfileLinkTile(
-                iconData: IconlyBold.paper,
-                text: 'Legal,Privacy & Policy',
-                icon: true,
+              InkWell(
+                onTap: () async {
+                  BaseHelper.launchBrowser('https://razpaywallet.com/policy/');
+                },
+                child: ProfileLinkTile(
+                  iconData: IconlyBold.paper,
+                  text: 'Legal,Privacy & Policy',
+                  icon: true,
+                ),
               ),
               LineDivider(
                 isDark: isDark,
               ),
-              ProfileLinkTile(
-                iconData: IconlyBold.chat,
-                text: 'Livechat support',
-                icon: true,
+              InkWell(
+                onTap: () async {
+                  BaseHelper.launchBrowser('https://razpaywallet.com/support');
+                },
+                child: ProfileLinkTile(
+                  iconData: IconlyBold.chat,
+                  text: 'Livechat support',
+                  icon: true,
+                ),
               ),
               LineDivider(
                 isDark: isDark,
