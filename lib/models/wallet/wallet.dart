@@ -34,17 +34,17 @@ class WalletResponse {
 
 class WalletAddress {
   int? id;
-  int? userId;
+  dynamic userId;
   String? currency;
   String? address;
-  double? balance;
-  double? manualBalance;
-  double? pendingBalance;
-  double? oldBalance;
-  double? totalBalance;
+  String? balance;
+  String? manualBalance;
+  String? pendingBalance;
+  String? oldBalance;
+  String? totalBalance;
   String? createdAt;
   String? updatedAt;
-  double? usd;
+  String? usd;
   String? status;
 
   WalletAddress({
@@ -68,14 +68,14 @@ class WalletAddress {
     userId: json['user_id'],
     currency: json['currency'],
     address: json['address'],
-    balance: json['balance']?.toDouble(),
-    manualBalance: json['manual_balance']?.toDouble(),
-    pendingBalance: json['pending_balance']?.toDouble(),
-    oldBalance: json['old_balance']?.toDouble(),
-    totalBalance: json['total_balance']?.toDouble(),
+    balance: json['balance'],
+    manualBalance: json['manual_balance'],
+    pendingBalance: json['pending_balance'],
+    oldBalance: json['old_balance'],
+    totalBalance: json['total_balance'],
     createdAt: json['created_at'],
     updatedAt: json['updated_at'],
-    usd: json['usd']?.toDouble(),
+    usd: json['usd'],
     status: json['status'],
   );
 

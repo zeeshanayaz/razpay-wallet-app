@@ -172,7 +172,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 },
                 child: ProfileLinkTile(
                   iconData: IconlyBold.paper,
-                  text: 'Legal,Privacy & Policy',
+                  text: 'Legal, Privacy & Policy',
                   icon: true,
                 ),
               ),

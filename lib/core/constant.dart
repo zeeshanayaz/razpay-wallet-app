@@ -27,8 +27,8 @@ const Map<String, dynamic> cryptoData = {
     'icon': 'assets/icons/eth.svg'
   },
   'usdt': {
-    'name': 'USDT',
-    'icon': 'assets/icons/binance.svg'
+    'name': 'Tether',
+    'icon': 'assets/icons/tether.svg'
   }
 };
 

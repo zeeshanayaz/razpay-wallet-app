@@ -38,11 +38,11 @@ class NotificationResponse {
 
 class Notification {
   int? id;
-  int? userId;
+  dynamic userId;
   String? title;
   String? description;
-  int? seen;
-  int? favourite;
+  dynamic seen;
+  dynamic favourite;
   String? createdAt;
   String? updatedAt;
 

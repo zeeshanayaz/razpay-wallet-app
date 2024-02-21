@@ -77,8 +77,9 @@ class _SplashScreenState extends State<SplashScreen> {
               // The green box must be a child of the AnimatedOpacity widget.
               child: Image.asset(
                 'assets/images/logo.png',
-                width: 200,
+                width: 120,
                 fit: BoxFit.cover,
+                color: white,
               ),
             ),
           )

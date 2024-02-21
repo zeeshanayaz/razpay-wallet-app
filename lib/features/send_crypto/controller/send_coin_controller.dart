@@ -16,8 +16,8 @@ class SendCoinController extends GetxController {
   final addressController = TextEditingController();
   final pinController = TextEditingController();
 
-  getUsdAmount(double usdRate) {
-    return usdRate * double.parse(amountController.text);
+  getUsdAmount(String usdRate) {
+    return double.parse(usdRate) * double.parse(amountController.text);
   }
 
   totalAmount() {
@@ -27,12 +27,12 @@ class SendCoinController extends GetxController {
     return inputAmount + withdrawalFee;
   }
 
-  getTotalUsdAmount(double usdRate) {
+  getTotalUsdAmount(String usdRate) {
     final walletController = Get.find<WalletController>();
-    double inputUsdAmount = usdRate * double.parse(amountController.text);
+    double inputUsdAmount = double.parse(usdRate) * double.parse(amountController.text);
 
     double withdrawalFee = getWithdrawalFee(walletController.selectedWallet.value.currency ?? '');
-    double withdrawalFeeUsdAmount = usdRate * withdrawalFee;
+    double withdrawalFeeUsdAmount = double.parse(usdRate) * withdrawalFee;
 
     return inputUsdAmount + withdrawalFeeUsdAmount;
   }

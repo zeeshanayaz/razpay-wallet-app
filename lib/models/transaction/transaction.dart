@@ -14,19 +14,19 @@ String transactionListToJson(List<Transaction> data) => json.encode(List<dynamic
 
 class Transaction {
   int? id;
-  int? userId;
+  dynamic userId;
   String? coinId;
   String? tnxid;
   String? address;
-  double? amount;
-  int? confirmations;
-  double? fees;
-  double? rate;
+  String? amount;
+  String? confirmations;
+  String? fees;
+  String? rate;
   String? category;
-  double? oldBalance;
-  double? newBalance;
+  String? oldBalance;
+  String? newBalance;
   String? type;
-  int? isPending;
+  String? isPending;
   String? createdAt;
   String? updatedAt;
   bool? btn;
@@ -57,13 +57,13 @@ class Transaction {
     coinId: json['coin_id'],
     tnxid: json['tnxid'],
     address: json['address'],
-    amount: json['amount']?.toDouble(),
+    amount: json['amount'],
     confirmations: json['confirmations'],
-    fees: json['fees']?.toDouble(),
-    rate: json['rate']?.toDouble(),
+    fees: json['fees'],
+    rate: json['rate'],
     category: json['category'],
-    oldBalance: json['old_balance']?.toDouble(),
-    newBalance: json['new_balance']?.toDouble(),
+    oldBalance: json['old_balance'],
+    newBalance: json['new_balance'],
     type: json['type'],
     isPending: json['is_pending'],
     createdAt: json['created_at'],

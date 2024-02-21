@@ -70,7 +70,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                   return TransactionTile(
                     id: transactionData.id!,
                     asset: transactionData.coinId ?? '',
-                    val: '${transactionData.amount ?? 0.0}',
+                    val: transactionData.amount ?? '0.0',
                     isDark: isDark,
                     status: (transactionData.category ?? '').toLowerCase() == 'receive'
                         ? 'Receive'

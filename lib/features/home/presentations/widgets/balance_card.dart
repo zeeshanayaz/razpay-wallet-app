@@ -22,117 +22,119 @@ class BalanceCard extends StatelessWidget {
     final graphController = Get.find<GraphController>();
 
     bool isDark = Provider.of<ThemeProvider>(context, listen: true).isDark;
-    return Obx(() => Stack(
-      clipBehavior: Clip.none,
-      alignment: Alignment.center,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(25),
-          height: height(context) * .22,
-          decoration: BoxDecoration(
-            color: primary,
-            borderRadius: BorderRadius.circular(15),
-            image: const DecorationImage(
-              image: AssetImage('assets/images/port-bg.png'),
-              alignment: Alignment.bottomRight,
+    return Obx(
+      () => Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(25),
+            height: height(context) * .20,
+            decoration: BoxDecoration(
+              color: primary,
+              borderRadius: BorderRadius.circular(15),
+              image: const DecorationImage(
+                image: AssetImage('assets/images/port-bg.png'),
+                alignment: Alignment.bottomRight,
+              ),
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'My Portofolio',
+                          style: textStyle14.copyWith(color: white),
+                        ),
+                        Text(
+                          '\$${graphController.graph.value.total ?? 0.0}',
+                          style: headerStyle.copyWith(fontSize: 30, color: white),
+                        ),
+                        // const SizedBoxH15(),
+                        Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: const Color(0xffDFF1FF),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                IconlyBold.arrow_up_2,
+                                color: green,
+                              ),
+                              Text(
+                                '${graphController.graph.value.status ?? 0.0}%',
+                                style: textStyle12.copyWith(
+                                  color: green,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Icon(
+                          Iconsax.chart,
+                          color: white,
+                        ),
+                        SizedBoxH20(),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'My Portofolio',
-                        style: textStyle14.copyWith(color: white),
-                      ),
-                      Text(
-                        '\$${graphController.graph.value.total ?? 0.0}',
-                        style: headerStyle.copyWith(color: white),
-                      ),
-                      // const SizedBoxH15(),
-                      Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: const Color(0xffDFF1FF),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              IconlyBold.arrow_up_2,
-                              color: green,
-                            ),
-                            Text(
-                              '${graphController.graph.value.status ?? 0.0}%',
-                              style: textStyle12.copyWith(
-                                color: green,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+          Positioned(
+            bottom: -20,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                actionButton(
+                  title: 'Receive',
+                  icon: 'receive',
+                  isDark: isDark,
+                  onPress: () {
+                    showModalBottomSheet(
+                      context: context,
+                      showDragHandle: true,
+                      isScrollControlled: true,
+                      // backgroundColor: isDark ? darkbgColor : white,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
                         ),
                       ),
-                    ],
-                  ),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Icon(
-                        Iconsax.chart,
-                        color: white,
-                      ),
-                      SizedBoxH20(),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+                      builder: (context) {
+                        return const ReceiveCryptoModal();
+                      },
+                    );
+                  },
+                ),
+                const SizedBoxW20(),
+                actionButton(
+                  title: 'Send',
+                  icon: 'send',
+                  isDark: isDark,
+                  onPress: () {
+                    Get.toNamed(AppRoutes.sendCrypto);
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
-        Positioned(
-          bottom: -15,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              actionButton(
-                title: 'Receive',
-                icon: 'receive',
-                isDark: isDark,
-                onPress: () {
-                  showModalBottomSheet(
-                    context: context,
-                    showDragHandle: true,
-                    isScrollControlled: true,
-                    // backgroundColor: isDark ? darkbgColor : white,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(20),
-                      ),
-                    ),
-                    builder: (context) {
-                      return const ReceiveCryptoModal();
-                    },
-                  );
-                },
-              ),
-              const SizedBoxW20(),
-              actionButton(
-                title: 'Send',
-                icon: 'send',
-                isDark: isDark,
-                onPress: () {
-                  Get.toNamed(AppRoutes.sendCrypto);
-                },
-              ),
-            ],
-          ),
-        ),
-      ],
-    ),);
+        ],
+      ),
+    );
   }
 
   Widget actionButton({
@@ -141,39 +143,60 @@ class BalanceCard extends StatelessWidget {
     required Function() onPress,
     required bool isDark,
   }) {
-    return InkWell(
-      onTap: onPress,
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        width: 120,
-        decoration: BoxDecoration(
-          color: white,
-          borderRadius: BorderRadius.circular(15),
-          boxShadow: [
-            if (!isDark)
-              const BoxShadow(
-                offset: Offset(1, 5),
-                color: grey,
-                blurRadius: 2,
-                spreadRadius: 0,
-              ),
-          ],
+    return ElevatedButton.icon(
+      onPressed: onPress,
+      icon: SvgPicture.asset('assets/icons/$icon.svg'),
+      label: Text(
+        title,
+        style: textStyle16.copyWith(
+          fontWeight: FontWeight.bold,
+          color: black,
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset('assets/icons/$icon.svg'),
-            const SizedBoxW10(),
-            Text(
-              title,
-              style: textStyle16.copyWith(
-                fontWeight: FontWeight.bold,
-                color: black,
-              ),
-            )
-          ],
+      ),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
         ),
       ),
     );
+
+    /*Card(
+      color: white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      */ /*borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                if (!isDark)
+                  const BoxShadow(
+                    offset: Offset(1, 5),
+                    color: grey,
+                    blurRadius: 2,
+                    spreadRadius: 0,
+                  ),*/ /*
+      child: InkWell(
+        onTap: onPress,
+        child: Container(
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset('assets/icons/$icon.svg'),
+                const SizedBoxW10(),
+                Text(
+                  title,
+                  style: textStyle16.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: black,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );*/
   }
 }
