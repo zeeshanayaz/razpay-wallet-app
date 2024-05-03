@@ -281,22 +281,25 @@ class PortTile extends StatelessWidget {
                             : 'assets/images/wave-blue.png',
                   ),*/
                   const SizedBoxW20(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '\$$value',
-                        style: textStyle14.copyWith(
-                          fontWeight: FontWeight.w500,
+                  SizedBox(
+                    width: 90,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '\$$value',
+                          style: textStyle14.copyWith(
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
-                      Text(
-                        '$increasePer%',
-                        style: textStyle12.copyWith(
-                          color: increasePer >= 0 ? green : red,
+                        Text(
+                          '$increasePer%',
+                          style: textStyle12.copyWith(
+                            color: increasePer >= 0 ? green : red,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),

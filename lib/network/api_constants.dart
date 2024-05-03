@@ -1,6 +1,6 @@
 class ApiConstants {
   static const int timeOutDuration = 60;
-  static const String baseUrl = 'https://subpanel.razpaywallet.com/api/';
+  static const String baseUrl = 'https://hpanel.molvault.com/api/';
 
   static const networkErrorMessage = 'No Internet connection';
   static const timeOutErrorMessage =

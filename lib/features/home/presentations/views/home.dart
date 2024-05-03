@@ -80,173 +80,176 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: Obx(
-        () => Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const BalanceCard(),
-              const SizedBoxH30(),
-              // Container(decoration: BoxDecoration(),),
-              Image.asset(
-                'assets/images/promo.png',
-                width: width(context),
-              ),
-              const SizedBoxH15(),
-              /* Text(
-              'My Portofolios',
-              style: textStyle16.copyWith(
-                fontWeight: FontWeight.w500,
-              ),
-            ),*/
-              // SingleChildScrollView(
-              //   scrollDirection: Axis.horizontal,
-              //   padding: const EdgeInsets.symmetric(
-              //     vertical: 20,
-              //     horizontal: 10,
-              //   ),
-              //   child: Row(
-              //     children: [
-              //       PortfolioCard(
-              //         icon: 'btc',
-              //         title: 'BTC',
-              //         isDark: isDark,
-              //       ),
-              //       const SizedBoxW20(),
-              //       PortfolioCard(
-              //         icon: 'eth',
-              //         title: 'ETH',
-              //         isDark: isDark,
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              // Text(
-              //   'Trending',
-              //   style: textStyle16.copyWith(
-              //     fontWeight: FontWeight.w500,
-              //   ),
-              // ),
-              Text(
+        () => RefreshIndicator(
+          onRefresh: () => graphController.retrieveGraph(),
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const BalanceCard(),
+                const SizedBoxH30(),
+                // Container(decoration: BoxDecoration(),),
+                Image.asset(
+                  'assets/images/promo.png',
+                  width: width(context),
+                ),
+                const SizedBoxH15(),
+                /* Text(
                 'My Portofolios',
                 style: textStyle16.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
+              ),*/
+                // SingleChildScrollView(
+                //   scrollDirection: Axis.horizontal,
+                //   padding: const EdgeInsets.symmetric(
+                //     vertical: 20,
+                //     horizontal: 10,
+                //   ),
+                //   child: Row(
+                //     children: [
+                //       PortfolioCard(
+                //         icon: 'btc',
+                //         title: 'BTC',
+                //         isDark: isDark,
+                //       ),
+                //       const SizedBoxW20(),
+                //       PortfolioCard(
+                //         icon: 'eth',
+                //         title: 'ETH',
+                //         isDark: isDark,
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // Text(
+                //   'Trending',
+                //   style: textStyle16.copyWith(
+                //     fontWeight: FontWeight.w500,
+                //   ),
+                // ),
+                Text(
+                  'My Portofolios',
+                  style: textStyle16.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBoxH15(),
+                Expanded(
+                  child: graphController.isLoading.isTrue
+                      ? DialogHelper.loadingIndicator()
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            PortTile(
+                              name: 'Bitcoin',
+                              asset: 'BTC',
+                              icon: 'btc',
+                              value: graphController.graph.value.btcUsd ?? 0.0,
+                              goingUp: true,
+                              increasePer: graphController.graph.value.btcStatus ?? 0.0,
+                              color: '',
+                            ),
+                            PortTile(
+                              name: 'Ethereum',
+                              asset: 'ETH',
+                              icon: 'eth',
+                              value: graphController.graph.value.ethUsd ?? 0.0,
+                              goingUp: true,
+                              increasePer: graphController.graph.value.ethStatus ?? 0.0,
+                              color: '',
+                            ),
+                            PortTile(
+                              name: 'USDT',
+                              asset: 'USDT',
+                              icon: 'usdt',
+                              value: graphController.graph.value.usdtUsd ?? 0.0,
+                              goingUp: true,
+                              increasePer: graphController.graph.value.usdtStatus ?? 0.0,
+                              color: '',
+                            ),
+                          ],
+                        ),
+                ),
+                /*graphController.isLoadingWallet.isTrue
+                  ? DialogHelper.loadingIndicator()
+                  : ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: graphController.wallet.length,
+                itemBuilder: (context, index) {
+                  return PortTile(
+                    trendingData: graphController.wallet[index],
+                    name: 'Bitcoin',
+                    asset: 'BTC',
+                    icon: 'btc',
+                    value: '\$20,000',
+                    goingUp: true,
+                    increasePer: '2.6%',
+                    color: '',
+                  );
+                },
+              ),*/
+                /*
+              const SizedBoxH5(),
+              LineDivider(
+                isDark: isDark,
               ),
-              const SizedBoxH15(),
-              Expanded(
-                child: graphController.isLoading.isTrue
-                    ? DialogHelper.loadingIndicator()
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          PortTile(
-                            name: 'Bitcoin',
-                            asset: 'BTC',
-                            icon: 'btc',
-                            value: graphController.graph.value.btcUsd ?? 0.0,
-                            goingUp: true,
-                            increasePer: graphController.graph.value.btcStatus ?? 0.0,
-                            color: '',
-                          ),
-                          PortTile(
-                            name: 'Ethereum',
-                            asset: 'ETH',
-                            icon: 'eth',
-                            value: graphController.graph.value.ethUsd ?? 0.0,
-                            goingUp: true,
-                            increasePer: graphController.graph.value.ethStatus ?? 0.0,
-                            color: '',
-                          ),
-                          PortTile(
-                            name: 'USDT',
-                            asset: 'USDT',
-                            icon: 'usdt',
-                            value: graphController.graph.value.usdtUsd ?? 0.0,
-                            goingUp: true,
-                            increasePer: graphController.graph.value.usdtStatus ?? 0.0,
-                            color: '',
-                          ),
-                        ],
-                      ),
+              const SizedBoxH5(),
+              const PortTile(
+                name: 'Ethereum',
+                asset: 'ETH',
+                icon: 'eth',
+                value: '\$20,000',
+                goingUp: true,
+                increasePer: '2.6%',
+                color: 'yellow',
               ),
-              /*graphController.isLoadingWallet.isTrue
-                ? DialogHelper.loadingIndicator()
-                : ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: graphController.wallet.length,
-              itemBuilder: (context, index) {
-                return PortTile(
-                  trendingData: graphController.wallet[index],
-                  name: 'Bitcoin',
-                  asset: 'BTC',
-                  icon: 'btc',
-                  value: '\$20,000',
-                  goingUp: true,
-                  increasePer: '2.6%',
-                  color: '',
-                );
-              },
-            ),*/
-              /*
-            const SizedBoxH5(),
-            LineDivider(
-              isDark: isDark,
+              const SizedBoxH5(),
+              LineDivider(
+                isDark: isDark,
+              ),
+              const SizedBoxH5(),
+              const PortTile(
+                name: 'Litecoin',
+                asset: 'LTC',
+                icon: 'ltc',
+                value: '\$20,000',
+                goingUp: false,
+                increasePer: '2.6%',
+                color: 'green',
+              ),
+              const SizedBoxH5(),
+              LineDivider(
+                isDark: isDark,
+              ),
+              const SizedBoxH5(),
+              const PortTile(
+                name: 'Binance',
+                asset: 'BNB',
+                icon: 'binance',
+                value: '\$20,000',
+                goingUp: true,
+                increasePer: '2.6%',
+                color: 'green',
+              ),
+              const SizedBoxH5(),
+              LineDivider(
+                isDark: isDark,
+              ),
+              const SizedBoxH5(),
+              const PortTile(
+                name: 'Ethereum',
+                asset: 'ETH',
+                icon: 'eth',
+                value: '\$20,000',
+                goingUp: true,
+                increasePer: '2.6%',
+                color: 'yellow',
+              ),*/
+              ],
             ),
-            const SizedBoxH5(),
-            const PortTile(
-              name: 'Ethereum',
-              asset: 'ETH',
-              icon: 'eth',
-              value: '\$20,000',
-              goingUp: true,
-              increasePer: '2.6%',
-              color: 'yellow',
-            ),
-            const SizedBoxH5(),
-            LineDivider(
-              isDark: isDark,
-            ),
-            const SizedBoxH5(),
-            const PortTile(
-              name: 'Litecoin',
-              asset: 'LTC',
-              icon: 'ltc',
-              value: '\$20,000',
-              goingUp: false,
-              increasePer: '2.6%',
-              color: 'green',
-            ),
-            const SizedBoxH5(),
-            LineDivider(
-              isDark: isDark,
-            ),
-            const SizedBoxH5(),
-            const PortTile(
-              name: 'Binance',
-              asset: 'BNB',
-              icon: 'binance',
-              value: '\$20,000',
-              goingUp: true,
-              increasePer: '2.6%',
-              color: 'green',
-            ),
-            const SizedBoxH5(),
-            LineDivider(
-              isDark: isDark,
-            ),
-            const SizedBoxH5(),
-            const PortTile(
-              name: 'Ethereum',
-              asset: 'ETH',
-              icon: 'eth',
-              value: '\$20,000',
-              goingUp: true,
-              increasePer: '2.6%',
-              color: 'yellow',
-            ),*/
-            ],
           ),
         ),
       ),
