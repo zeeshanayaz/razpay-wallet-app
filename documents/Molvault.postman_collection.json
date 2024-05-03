@@ -1,0 +1,713 @@
+{
+	"info": {
+		"_postman_id": "c9ac27fd-3ceb-48ac-a625-4f734119a50b",
+		"name": "Molvault",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "228427"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"item": [
+						{
+							"name": "Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"pm.collectionVariables.set(\"molvault_token\", jsonData.data.token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"usolojnr@gmail.com\",\n    \"password\": \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{wallet_url}}/login",
+									"host": [
+										"{{wallet_url}}"
+									],
+									"path": [
+										"login"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "emmypongaim@gmail.com",
+											"disabled": true
+										},
+										{
+											"key": "password",
+											"value": "password",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login using PIN",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"pin\": 1234\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{wallet_url}}/pin-login",
+									"host": [
+										"{{wallet_url}}"
+									],
+									"path": [
+										"pin-login"
+									],
+									"query": [
+										{
+											"key": "pin",
+											"value": "1234",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Forget Password",
+					"item": [
+						{
+							"name": "Send forget password otp",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"test1@yopmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{wallet_url}}/send-otp",
+									"host": [
+										"{{wallet_url}}"
+									],
+									"path": [
+										"send-otp"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "test1@yopmail.com",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset Password",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{wallet_url}}/reset-password?email=test1@yopmail.com&otp=5475&password=12345678",
+									"host": [
+										"{{wallet_url}}"
+									],
+									"path": [
+										"reset-password"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "test1@yopmail.com"
+										},
+										{
+											"key": "otp",
+											"value": "5475"
+										},
+										{
+											"key": "password",
+											"value": "12345678"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sign Up",
+					"item": [
+						{
+							"name": "Register",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"pm.collectionVariables.set(\"molvault_token\", jsonData.data.token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"first_name\": \"Testing\",\r\n    \"last_name\": \"Usering\",\r\n    \"email\": \"test9@yopmail.com\",\r\n    \"password\": \"password\",\r\n    \"country\": \"Pakistan\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{wallet_url}}/register",
+									"host": [
+										"{{wallet_url}}"
+									],
+									"path": [
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create/Update pin",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"pin\": \"1234\",\r\n    \"type\": \"new\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{wallet_url}}/update-pin",
+									"host": [
+										"{{wallet_url}}"
+									],
+									"path": [
+										"update-pin"
+									],
+									"query": [
+										{
+											"key": "pin",
+											"value": "1234",
+											"disabled": true
+										},
+										{
+											"key": "type",
+											"value": "update",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "KYC",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "first_name",
+											"value": "Muhammad",
+											"type": "text"
+										},
+										{
+											"key": "last_name",
+											"value": "Rashid",
+											"type": "text"
+										},
+										{
+											"key": "phone_number",
+											"value": "+923066736236",
+											"type": "text"
+										},
+										{
+											"key": "city",
+											"value": "Karachi",
+											"type": "text"
+										},
+										{
+											"key": "country",
+											"value": "Pakistan",
+											"type": "text"
+										},
+										{
+											"key": "document_name",
+											"value": "Digital Document",
+											"type": "text"
+										},
+										{
+											"key": "front",
+											"type": "file",
+											"src": "/C:/Users/zeesh/Desktop/Zeeshan Ayaz (2).png"
+										},
+										{
+											"key": "back",
+											"type": "file",
+											"src": "/C:/Users/zeesh/Desktop/Zeeshan Ayaz (1).png"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{wallet_url}}/kyc",
+									"host": [
+										"{{wallet_url}}"
+									],
+									"path": [
+										"kyc"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Logout/Delete Account",
+			"item": [
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{wallet_url}}/logout",
+							"host": [
+								"{{wallet_url}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Account",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{wallet_url}}/delete",
+							"host": [
+								"{{wallet_url}}"
+							],
+							"path": [
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{wallet_url}}/profile",
+							"host": [
+								"{{wallet_url}}"
+							],
+							"path": [
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{wallet_url}}/change-password?old_password=password&new_password=pass1234&confirm_password=pass123",
+							"host": [
+								"{{wallet_url}}"
+							],
+							"path": [
+								"change-password"
+							],
+							"query": [
+								{
+									"key": "old_password",
+									"value": "password"
+								},
+								{
+									"key": "new_password",
+									"value": "pass1234"
+								},
+								{
+									"key": "confirm_password",
+									"value": "pass123"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notifications",
+			"item": [
+				{
+					"name": "Notifications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{wallet_url}}/notifications",
+							"host": [
+								"{{wallet_url}}"
+							],
+							"path": [
+								"notifications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Notifications Seen",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{wallet_url}}/notifications-seen",
+							"host": [
+								"{{wallet_url}}"
+							],
+							"path": [
+								"notifications-seen"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Get Transaction",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{wallet_url}}/get-transaction",
+							"host": [
+								"{{wallet_url}}"
+							],
+							"path": [
+								"get-transaction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Transaction",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{wallet_url}}/single-transaction/27",
+							"host": [
+								"{{wallet_url}}"
+							],
+							"path": [
+								"single-transaction",
+								"27"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Market",
+			"item": [
+				{
+					"name": "market",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{wallet_url}}/market",
+							"host": [
+								"{{wallet_url}}"
+							],
+							"path": [
+								"market"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Wallet",
+			"item": [
+				{
+					"name": "User All Wallets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{wallet_url}}/wallet",
+							"host": [
+								"{{wallet_url}}"
+							],
+							"path": [
+								"wallet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Coins",
+					"protocolProfileBehavior": {
+						"followRedirects": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 0.00001,\r\n    \"currency\": \"BTC\",\r\n    \"sender_address\": \"3DrdYVQX86mAuWqg5og5ucBczBgg56zKWZ\",\r\n    \"receiver_address\": \"3FWXnRPCTvPHLz8YAYXb9i3mVrrEVy3she\",\r\n    \"pin\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{wallet_url}}/send-coins",
+							"host": [
+								"{{wallet_url}}"
+							],
+							"path": [
+								"send-coins"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "Graph",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{wallet_url}}/graph",
+							"host": [
+								"{{wallet_url}}"
+							],
+							"path": [
+								"graph"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Trending",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{wallet_url}}/trending",
+							"host": [
+								"{{wallet_url}}"
+							],
+							"path": [
+								"trending"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Generate Wallet Address",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"currency\": \"BTC\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{wallet_url}}/generate-wallet",
+					"host": [
+						"{{wallet_url}}"
+					],
+					"path": [
+						"generate-wallet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Live Rates",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{wallet_url}}/rate/eth",
+					"host": [
+						"{{wallet_url}}"
+					],
+					"path": [
+						"rate",
+						"eth"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{molvault_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "wallet_url",
+			"value": "https://hpanel.molvault.com/api"
+		},
+		{
+			"key": "molvault_token",
+			"value": ""
+		},
+		{
+			"key": "url",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
